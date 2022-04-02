@@ -104,6 +104,12 @@ Route::group(['prefix' => 'error'], function(){
     Route::get('500', function () { return view('pages.error.500'); });
 });
 
+Route::group(['prefix' => 'ejemplos'], function(){
+    Route::get('crud-form', function () { return view('pages.ejemplos.crud-form'); });
+    Route::get('login', function () { return view('pages.ejemplos.login'); });
+    Route::get('register', function () { return view('pages.ejemplos.register'); });
+});
+
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";
