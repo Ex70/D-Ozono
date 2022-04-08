@@ -11,9 +11,52 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\UserAuthController;
+
 Route::get('/', function () {
     return view('dashboard');
 });
+
+// Auth::routes();
+
+// Route::get('/', [UserAuthController::class, 'index'])
+//     ->name('user.home')
+//     ->middleware('auth:web');
+Route::get('/login', [UserAuthController::class, 'login'])
+    ->name('pages.ejemplos.login');
+Route::post('/login', [UserAuthController::class, 'handleLogin'])
+    ->name('user.handleLogin');
+Route::get('/logout', [UserAuthController::class, 'index'])
+    ->name('user.logout');
+
+
+Route::get('admin/', [AdminAuthController::class, 'index'])
+    ->name('admin.home')
+    ->middleware('auth:webadmin');
+Route::get('admin/login', [AdminAuthController::class, 'login'])
+    ->name('admin.login');
+Route::post('admin/login', [AdminAuthController::class, 'handleLogin'])
+    ->name('admin.handleLogin');
+Route::get('admin/logout', [AdminAuthController::class, 'index'])
+    ->name('admin.logout');
+
+Route::get('/permisos',[PermisoController::class, 'index']);
+
+// Route::prefix('usuario')->as('usuario.')->group(function() {
+//     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');
+//     Route::namespace('Auth\Login')->group(function() {
+//         Route::get('login', 'UsuariosController@showLoginForm')->name('login');
+//         Route::post('login', 'UsuariosController@login')->name('login');
+//         Route::post('logout', 'UsuariosController@logout')->name('logout');
+//     });
+//  });
+
+// Route::group(['prefix' => 'layout'], function(){
+//     Route::get('master', function () { return view('pages.layout.master'); });
+// });
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });

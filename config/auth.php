@@ -47,10 +47,9 @@ return [
             'hash' => false,
         ],
 
-        'usuario' => [
-            'redirectTo' => 'usuario.home',
+        'webusuario' => [
             'driver' => 'session',
-            'provider' => 'usuario',
+            'provider' => 'usuarios',
         ],
     ],
 
@@ -77,7 +76,7 @@ return [
             'model' => App\User::class,
         ],
 
-        'usuario' => [
+        'usuarios' => [
             'driver' => 'eloquent',
             'model' => App\Models\Usuario::class,
         ],
