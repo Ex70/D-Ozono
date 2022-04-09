@@ -33,8 +33,8 @@
                 <td>{{$permiso->id}}</td>
                 <td>{{$permiso->descripcion}}</td>
                 <td>
-                  <a href="{{url('/permisos/')}}" class="btn" role="button">Editar</a> / 
-                  <a href="#" class="btn btn-danger" role="button">Eliminar</a>
+                  <a href="{{url('/permisos/')}}" class="btn btn-outline-dark" role="button">Editar</a>
+                  <a href="#" class="btn btn-outline-danger" role="button">Eliminar</a>
                 </td>
               </tr>
               @endforeach
