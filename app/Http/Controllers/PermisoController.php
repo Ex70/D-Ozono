@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Models\Permiso;
-use App\Models\Permiso as ModelsPermiso;
+//use App\Models\Models\Permiso;
+use App\Models\Permiso;
 use Illuminate\Http\Request;
 
 class PermisoController extends Controller
@@ -15,7 +15,7 @@ class PermisoController extends Controller
      */
     public function index()
     {
-        $permisos = ModelsPermiso::where('status',1)->get();
+        $permisos = Permiso::where('status',1)->get();
         return view('pages.ejemplos.crud-form',compact('permisos'));
     }
 

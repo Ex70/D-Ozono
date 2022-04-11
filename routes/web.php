@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UsuariosController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -44,7 +45,7 @@ Route::get('admin/logout', [AdminAuthController::class, 'index'])
     ->name('admin.logout');
 
 Route::get('/permisos',[PermisoController::class, 'index']);
-
+Route::get('/usuarios1',[UsuariosController::class, 'index']);
 // Route::prefix('usuario')->as('usuario.')->group(function() {
 //     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');
 //     Route::namespace('Auth\Login')->group(function() {
