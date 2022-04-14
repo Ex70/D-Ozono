@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Factura;
 use Illuminate\Http\Request;
 
 class FacturasController extends Controller
@@ -14,6 +15,8 @@ class FacturasController extends Controller
     public function index()
     {
         //
+        $datos['facturas']=Factura::where('status',1)->get();
+        return view('pages.facturas.index',$datos);
     }
 
     /**

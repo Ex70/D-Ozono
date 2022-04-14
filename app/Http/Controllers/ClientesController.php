@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -14,6 +15,8 @@ class ClientesController extends Controller
     public function index()
     {
         //
+        $clientes = Cliente::where('status',1)->get();
+        return view('pages.clientes.index',compact('clientes'));
     }
 
     /**
@@ -79,6 +82,12 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+         Cliente::where('id',$id)->update(['status'=>0]);
+        $clientes = Cliente::where('status',1)->get();
+        return view('pages.clientes.index',compact('clientes'));
     }
+
+    
+
+    
 }

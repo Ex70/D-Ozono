@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -14,6 +14,9 @@ class ProductosController extends Controller
     public function index()
     {
         //
+          $productos = Producto::where('status',1)->get();
+           return view('pages.productos.index',compact('productos'));
+
     }
 
     /**

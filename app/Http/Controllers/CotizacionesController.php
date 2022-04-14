@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cotizacion;
 use Illuminate\Http\Request;
 
 class CotizacionesController extends Controller
@@ -14,6 +15,8 @@ class CotizacionesController extends Controller
     public function index()
     {
         //
+        $cotizaciones = Cotizacion::where('status',1)->get();
+        return view('pages.cotizaciones.index',compact('cotizaciones'));
     }
 
     /**

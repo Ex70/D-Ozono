@@ -16,6 +16,14 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\CategoriasProductosController;
+use App\Http\Controllers\CatalogosProductosController;
+use App\Http\Controllers\FacturasController;
+use App\Http\Controllers\DireccionesController;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\CotizacionesController;
+use App\Http\Controllers\ProductosController;
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -46,6 +54,18 @@ Route::get('admin/logout', [AdminAuthController::class, 'index'])
 
 Route::get('/permisos',[PermisoController::class, 'index']);
 Route::get('/usuarios1',[UsuariosController::class, 'index']);
+Route::get('/categoriaproductos',[CategoriasProductosController::class, 'index']);
+Route::get('/catalogos',[CatalogosProductosController::class, 'index']);
+Route::get('/facturas',[FacturasController::class, 'index']);
+Route::get('/direcciones',[DireccionesController::class, 'index']);
+Route::get('/clientes',[ClientesController::class, 'index']);
+Route::delete('clientes/{id}',[ClientesController::class, 'destroy']);
+
+
+Route::get('/cotizaciones',[CotizacionesController::class, 'index']); //error
+Route::get('/productos',[ProductosController::class, 'index']);
+
+
 // Route::prefix('usuario')->as('usuario.')->group(function() {
 //     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');
 //     Route::namespace('Auth\Login')->group(function() {

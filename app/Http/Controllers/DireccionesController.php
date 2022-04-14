@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Direccion;
 use Illuminate\Http\Request;
 
 class DireccionesController extends Controller
@@ -14,6 +15,8 @@ class DireccionesController extends Controller
     public function index()
     {
         //
+         $datos['direcciones']=Direccion::where('status',1)->get();
+         return view('pages.direcciones.index',$datos);
     }
 
     /**

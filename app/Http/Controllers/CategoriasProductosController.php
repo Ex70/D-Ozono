@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\Categorias;
 
 class CategoriasProductosController extends Controller
 {
@@ -14,6 +16,8 @@ class CategoriasProductosController extends Controller
     public function index()
     {
         //
+        $datos['categorias']=Categorias::where('status',1)->get(); 
+         return view('pages.categorias.index',$datos);
     }
 
     /**

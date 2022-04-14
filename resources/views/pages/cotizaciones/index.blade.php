@@ -22,34 +22,48 @@
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
             <thead>
-              <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Usuario</th>
-                <th>Permiso</th>
-                <th>Acciones</th>
-              </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>CLIENTE</th>
+                    <th>TIPO</th>
+                    <th>FECHA</th>
+                    <th>NOTAS</th>
+                    <th>TIPO PAGO</th>
+                    <th>TIEMPO ENTREGA</th>
+                    <th>VIGENCIA</th>
+                    <th>CONDICIONES</th>
+                    <th>TOTAL</th>
+                    <th>DESCUENTO</th>
+                    <th>DESCUENTO ESPECIAL</th>
+                    <th>ACCIONES</th>
+                </tr>
             </thead>
             <tbody>
-              @foreach ($usuarios as $usuario)
-              <tr>
-                <td>{{$usuario->id}}</td>
-                <td>{{$usuario->nombre}}</td>
-                <td>{{$usuario->correo}}</td>
-                <td>{{$usuario->usuario}}</td>
-                <td>{{$usuario->permisos->descripcion}}</td>
-                <td>
-                    <!-- Large modal -->
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Editar</button>
-                    {{-- <a href="{{url('/usuarios/')}}" class="btn btn-outline-dark" role="button">Editar</a> --}}
-                    <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button>
-                    {{-- <a href="#" class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')" role="button">Eliminar</a> --}}
-                </td>
-              </tr>
-              @endforeach
+                                @foreach($cotizaciones as $cotizacion)
+                                <tr>
+                                    <td>{{$cotizacion->id}}</td>
+                                    <td>{{$cotizacion->id_cliente}}</td>
+                                    <td>{{$cotizacion->tipo}}</td>
+                                    <td>{{$cotizacion->fecha}}</td> 
+                                    <td>{{$cotizacion->notas}}</td>
+                                    <td>{{$cotizacion->tipo_pago}}</td>
+                                    <td>{{$cotizacion->tiempo_entrega}}</td>
+                                    <td>{{$cotizacion->vigencia}}</td>
+                                    <td>{{$cotizacion->condiciones}}</td>
+                                    <td>{{$cotizacion->total}}</td>
+                                    <td>{{$cotizacion->descuento}}</td>
+                                    <td>{{$cotizacion->descuento_especial}}</td>    
+                                    <td>        
+                                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Editar</button>                        
+                                        <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button>
+                                        
+                                        <a href="{{url('/cotizacion/'.$cotizacion->id.'/agregarproducto')}}">Agregar producto</a>
+                                        <a href="{{url('/cotizacion/'.$cotizacion->id.'/consult')}}">Consultar Productos</a>
+                                    </td>
+                                </tr>
+                                @endforeach
             </tbody>
-          </table>
+         </table>
         </div>
       </div>
     </div>
@@ -110,25 +124,9 @@
 
 @push('custom-scripts')
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
-    <script> 
-     $("#btn1").click(function(){
-        Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      }
-})
-}); 
-  </Script>
+    
 @endpush
+
+
+
+                        

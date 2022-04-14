@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catalogo;
 use Illuminate\Http\Request;
 
 class CatalogosProductosController extends Controller
@@ -14,6 +15,8 @@ class CatalogosProductosController extends Controller
     public function index()
     {
         //
+         $catalogos = Catalogo::where('status',1)->get();
+       return view('pages.catalogos.index',compact('catalogos'));
     }
 
     /**
