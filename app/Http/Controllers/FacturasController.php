@@ -84,4 +84,22 @@ class FacturasController extends Controller
     {
         //
     }
+
+     public function status($id)
+    {
+         Factura::where('id',$id)->update(['status'=>0]);
+         $factura=Factura::where('id',$id)->get();
+        if (!empty($factura)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+    }
 }

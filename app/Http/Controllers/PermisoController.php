@@ -84,4 +84,23 @@ class PermisoController extends Controller
     {
         //
     }
+
+    public function status($id)
+    {
+         Permiso::where('id',$id)->update(['status'=>0]);
+         $permiso=Permiso::where('id',$id)->get();
+        if (!empty($permiso)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+
+}
 }

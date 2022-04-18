@@ -84,4 +84,23 @@ class ProductosController extends Controller
     {
         //
     }
+
+    public function status($id)
+    {
+         Producto::where('id',$id)->update(['status'=>0]);
+         $productos=Producto::where('id',$id)->get();
+        if (!empty($productos)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+    
+    }
 }

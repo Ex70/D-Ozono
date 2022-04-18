@@ -80,11 +80,28 @@ class ClientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function status($id)
     {
          Cliente::where('id',$id)->update(['status'=>0]);
-        $clientes = Cliente::where('status',1)->get();
-        return view('pages.clientes.index',compact('clientes'));
+         $clientes=Cliente::where('id',$id)->get();
+        if (!empty($clientes)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+
+   
+      
+         
+
+
     }
 
     

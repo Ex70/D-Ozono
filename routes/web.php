@@ -59,9 +59,15 @@ Route::get('/catalogos',[CatalogosProductosController::class, 'index']);
 Route::get('/facturas',[FacturasController::class, 'index']);
 Route::get('/direcciones',[DireccionesController::class, 'index']);
 Route::get('/clientes',[ClientesController::class, 'index']);
-Route::delete('clientes/{id}',[ClientesController::class, 'destroy']);
-
-
+Route::post('clientes/{id}',[ClientesController::class, 'status']);
+Route::post('cotizaciones/{id}',[CotizacionesController::class, 'status']);
+Route::post('facturas/{id}',[FacturasController::class, 'status']);
+Route::post('permisos/{id}',[PermisoController::class, 'status']);
+Route::post('productos/{id}',[ProductosController::class, 'status']);
+Route::post('catalogos/{id}',[CatalogosProductosController::class, 'status']);
+Route::post('direcciones/{id}',[DireccionesController::class, 'status']);
+Route::post('usuarios1/{id}',[UsuariosController::class, 'status']);
+Route::post('categoriaproductos/{id}',[CategoriasProductosController::class, 'status']);
 Route::get('/cotizaciones',[CotizacionesController::class, 'index']); //error
 Route::get('/productos',[ProductosController::class, 'index']);
 

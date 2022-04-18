@@ -85,4 +85,25 @@ class CategoriasProductosController extends Controller
     {
         //
     }
+
+    public function status($id)
+    {
+         Categorias::where('id',$id)->update(['status'=>0]);
+         $Categorias=Categorias::where('id',$id)->get();
+        if (!empty($Categorias)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+    }
+
 }
+    
+

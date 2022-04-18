@@ -10,7 +10,7 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Administración</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Permisos</li>
+    <li class="breadcrumb-item active" aria-current="page">Clientes</li>
   </ol>
 </nav>
 
@@ -18,7 +18,7 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Permisos</h6>
+        <h6 class="card-title">Clientes</h6>
         {{-- <p class="text-muted mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> --}}
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -53,13 +53,8 @@
                           
                         
                         <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Editar</button>
-                        <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button>
-                       
-                         <form action="{{url('/clientes/'.$cliente->id)}}"  class="formulario-eliminar" method="post">
-                          @csrf
-                          {{method_field('DELETE')}}
-                          <input type="submit" onclick="" class="btn btn-outline-danger" value="Borrar">
-                           </form>
+                        <button class="btn btn-danger" onclick="deleteConfirmation({{$cliente->id}})">Eliminar</button>
+                         
                         
                         
                         </td>
@@ -91,45 +86,50 @@
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
+  <script type="text/javascript">
+  function deleteConfirmation(id) {
+    swal.fire({
+    title: "¿Eliminar?",
+    text: "!Favor de confirmar!",
+    type: "warning",
+    showCancelButton: !0,
+    confirmButtonText: "Si, Eliminar!",
+    cancelButtonText: "No, cancelar!",
+    reverseButtons: !0
+    }).then(function (e) {
+       if (e.value === true) {
+       var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-@if (session('eliminar')== 'ok')
-  <script>
-        Swal.fire(
-       'Deleted!',
-       'Your file has been deleted.',
-       'success'
-       )
-  </script>
-@endif
-
-
-<script>
-
-$('.formulario-eliminar').submit(function(e){
-  e.preventDefault();
-
-  Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.value) {
-  this.submit();
-    // 
-  }
-})
-
-});
-  
+       $.ajax({
+          type: 'POST',
+          url: "{{url('/clientes')}}/" + id,
+          data: {_token: CSRF_TOKEN},
+          dataType: 'JSON',
+    
+          success: function (results) {
+            if (results.success === true) {
+               // alert("funciono");
+                swal.fire("!Hecho!", results.message, "success");
+                document.location.reload();
+              
+            } 
+            else {
+                //alert("no funciono");
+                swal.fire("!Error!", results.message, "error");
+            }
+            
+          }
+        });
+      } 
+       else {
+          e.dismiss;
+       }
+      }, function (dismiss) {
+         return false;
+      }
+      )
+}
 </script>
-
-  
-
 @endpush
-
 
 

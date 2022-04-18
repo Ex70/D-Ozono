@@ -55,8 +55,23 @@ class UsuariosController extends Controller
         //
     }
 
-    public function status($id){
-        Usuario::where('id',$id)->update(['status'=>0]);
-        return redirect('/usuarios');
+   
+      public function status($id)
+    {
+         Usuario::where('id',$id)->update(['status'=>0]);
+         $usuario=Usuario::where('id',$id)->get();
+        if (!empty($usuario)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+
     }
 }

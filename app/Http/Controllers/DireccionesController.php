@@ -84,4 +84,24 @@ class DireccionesController extends Controller
     {
         //
     }
+
+     public function status($id)
+    {
+         Direccion::where('id',$id)->update(['status'=>0]);
+         $direccion=Direccion::where('id',$id)->get();
+        if (!empty($direccion)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+
+   
+    }
 }

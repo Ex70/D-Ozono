@@ -84,4 +84,22 @@ class CatalogosProductosController extends Controller
     {
         //
     }
+
+    public function status($id)
+    {
+         Catalogo::where('id',$id)->update(['status'=>0]);
+         $Catalogo=Catalogo::where('id',$id)->get();
+        if (!empty($Catalogo)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
+    }
 }

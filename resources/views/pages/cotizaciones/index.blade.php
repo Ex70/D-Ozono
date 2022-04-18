@@ -9,7 +9,7 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Administración</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Permisos</li>
+    <li class="breadcrumb-item active" aria-current="page">Cotizaciones</li>
   </ol>
 </nav>
 
@@ -17,7 +17,7 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Usuarios</h6>
+        <h6 class="card-title">Cotizaciones</h6>
         {{-- <p class="text-muted mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> --}}
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
@@ -55,7 +55,8 @@
                                     <td>{{$cotizacion->descuento_especial}}</td>    
                                     <td>        
                                         <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Editar</button>                        
-                                        <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button>
+                                        <button class="btn btn-outline-danger" onclick="deleteConfirmation({{$cotizacion->id}})">Eliminar</button>
+                    
                                         
                                         <a href="{{url('/cotizacion/'.$cotizacion->id.'/agregarproducto')}}">Agregar producto</a>
                                         <a href="{{url('/cotizacion/'.$cotizacion->id.'/consult')}}">Consultar Productos</a>
@@ -124,9 +125,52 @@
 
 @push('custom-scripts')
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
+      <script type="text/javascript">
+  function deleteConfirmation(id) {
+    swal.fire({
+    title: "¿Eliminar?",
+    text: "!Favor de confirmar!",
+    type: "warning",
+    showCancelButton: !0,
+    confirmButtonText: "Si, Eliminar!",
+    cancelButtonText: "No, cancelar!",
+    reverseButtons: !0
+    }).then(function (e) {
+       if (e.value === true) {
+       var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+       $.ajax({
+          type: 'POST',
+          url: "{{url('/cotizaciones')}}/" + id,
+          data: {_token: CSRF_TOKEN},
+          dataType: 'JSON',
+    
+          success: function (results) {
+            if (results.success === true) {
+               // alert("funciono");
+                swal.fire("!Hecho!", results.message, "success");
+                document.location.reload();
+              
+            } 
+            else {
+                //alert("no funciono");
+                swal.fire("!Error!", results.message, "error");
+            }
+            
+          }
+        });
+      } 
+       else {
+          e.dismiss;
+       }
+      }, function (dismiss) {
+         return false;
+      }
+      )
+}
+</script>
     
 @endpush
-
 
 
                         

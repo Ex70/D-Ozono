@@ -84,4 +84,23 @@ class CotizacionesController extends Controller
     {
         //
     }
+
+     public function status($id)
+    {
+         Cotizacion::where('id',$id)->update(['status'=>0]);
+         $cotizacion=Cotizacion::where('id',$id)->get();
+        if (!empty($cotizacion)){
+            $success = true;
+            $message = "Registo eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Rgistro no eliminado";
+        }
+
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);     
+
+    }
 }

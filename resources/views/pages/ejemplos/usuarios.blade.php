@@ -43,8 +43,8 @@
                     <!-- Large modal -->
                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Editar</button>
                     {{-- <a href="{{url('/usuarios/')}}" class="btn btn-outline-dark" role="button">Editar</a> --}}
-                    <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button>
-                    {{-- <a href="#" class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')" role="button">Eliminar</a> --}}
+                    <button class="btn btn-danger" onclick="deleteConfirmation({{$usuario->id}})">Eliminar</button>
+                    
                 </td>
               </tr>
               @endforeach
@@ -110,25 +110,48 @@
 
 @push('custom-scripts')
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
-    <script> 
-     $("#btn1").click(function(){
-        Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+    <script type="text/javascript">
+  function deleteConfirmation(id) {
+    swal.fire({
+    title: "¿Eliminar?",
+    text: "!Favor de confirmar!",
+    type: "warning",
+    showCancelButton: !0,
+    confirmButtonText: "Si, Eliminar!",
+    cancelButtonText: "No, cancelar!",
+    reverseButtons: !0
+    }).then(function (e) {
+       if (e.value === true) {
+       var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+       $.ajax({
+          type: 'POST',
+          url: "{{url('/usuarios1')}}/" + id,
+          data: {_token: CSRF_TOKEN},
+          dataType: 'JSON',
+    
+          success: function (results) {
+            if (results.success === true) {
+               // alert("funciono");
+                swal.fire("!Hecho!", results.message, "success");
+                document.location.reload();
+              
+            } 
+            else {
+                //alert("no funciono");
+                swal.fire("!Error!", results.message, "error");
+            }
+            
+          }
+        });
+      } 
+       else {
+          e.dismiss;
+       }
+      }, function (dismiss) {
+         return false;
       }
-})
-}); 
-  </Script>
+      )
+}
+</script>
 @endpush
