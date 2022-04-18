@@ -71,6 +71,8 @@ Route::post('categoriaproductos/{id}',[CategoriasProductosController::class, 'st
 Route::get('/cotizaciones',[CotizacionesController::class, 'index']); //error
 Route::get('/productos',[ProductosController::class, 'index']);
 
+Route::get('/usuario/{id}/edit',[UsuariosController::class, 'edit']);
+Route::post('/usuarios1',[UsuariosController::class, 'store']);
 
 // Route::prefix('usuario')->as('usuario.')->group(function() {
 //     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');
@@ -189,3 +191,7 @@ Route::get('/clear-cache', function() {
 Route::any('/{page?}',function(){
     return View::make('pages.error.404');
 })->where('page','.*');
+
+Route::get('/token', function () {
+    return csrf_token(); 
+});

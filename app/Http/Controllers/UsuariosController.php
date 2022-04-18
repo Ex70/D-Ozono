@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Permiso;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\Response;
 
 class UsuariosController extends Controller
 {
@@ -17,21 +19,28 @@ class UsuariosController extends Controller
     // }
 
     public function index(){
-        // $permisos = Permiso::where('status',1)->get();
-        $usuarios = Usuario::where('status',1)->get();
-        return view('pages.ejemplos.usuarios',compact('usuarios'));
-        // return view('welcome',compact('usuarios'));
+        $datos['usuarios'] = Usuario::where('status',1)->with('permisos')->get();
+        $datos['permisos'] = Permiso::all();
+        return view('pages.ejemplos.usuarios',compact('datos'));
     }
 
     public function create(){
-        $datos['permisos'] = Permiso::all();
-        return view('usuarios.create',$datos);
+        //
     }
 
     public function store(Request $request){
-        $datosUsuario = request()->except('_token');
-        Usuario::insert($datosUsuario);
-        return response()->json($datosUsuario);
+        // Obtengo el ID del usuario si es que se está editando
+        $usuarioID = $request->id;
+        // Hago uso del método updateOrCreate
+        $usuario = Usuario::updateOrCreate(
+            // Si hay un id, lo igualo con el que traigo en el request y Laravel interpreta que será un update
+            ['id' => $usuarioID],
+            // Mando todos los datos que se van a actualizar/insertar en la BD
+            ['nombre' => $request->nombre, 'correo' => $request->correo, 'usuario' => $request->usuario, 'password' => $request->password, 'id_permiso' => $request->id_permiso]);
+        //Finalmente, vuelvo a traer el usuario que edité
+        $data['usuario']=Usuario::where('id',$usuarioID)->with('permisos')->get();
+        // Y vuelvo a mandar todo en formato json
+        return response()->json($data);
     }
 
     public function show($id){
@@ -39,16 +48,16 @@ class UsuariosController extends Controller
     }
 
     public function edit($id){
+        // Busco al usuario que se va a editar
         $datos['usuario']=Usuario::findOrFail($id);
+        // Y mando todos los permisos para cargar el select del formulario
         $datos['permisos'] = Permiso::all();
-        return view('usuarios.edit',$datos);
+        // Devuelvo el resultado en formato JSON para que lo pueda leer el método AJAX
+        return response()->json($datos);
     }
 
     public function update(Request $request, $id){
-        $datosUsuario=request()->except('_token','_method');
-        Usuario::where('id',$id)->update($datosUsuario);
-        $usuarios = Usuario::all();
-        return view('welcome',compact('usuarios'));
+        //
     }
 
     public function destroy($id){
