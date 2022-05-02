@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cotizacion;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class CotizacionesController extends Controller
@@ -15,8 +16,9 @@ class CotizacionesController extends Controller
     public function index()
     {
         //
-        $cotizaciones = Cotizacion::where('status',1)->get();
-        return view('pages.cotizaciones.index',compact('cotizaciones'));
+        $datos['cotizaciones'] = Cotizacion::where('status',1)->with('clientes')->get();
+        $datos['clientes'] = Cliente::all();
+        return view('pages.cotizaciones.index',compact('datos'));
     }
 
     /**
@@ -38,6 +40,23 @@ class CotizacionesController extends Controller
     public function store(Request $request)
     {
         //
+        $cotizacionID= $request->id;
+        $cotizacion =Cotizacion::updateOrCreate(
+            ['id'=>$cotizacionID],
+            ['id_cliente'=>$request->id_cliente,
+            'tipo'=>$request->tipo,
+            'fecha'=>$request->fecha,
+            'notas'=>$request->notas,
+            'tipo_pago'=>$request->tipo_pago,
+            'tiempo_entrega'=>$request->tiempo_entrega,
+            'vigencia'=>$request->vigencia,
+            'condiciones'=>$request->condiciones,
+            'total'=>$request->total,
+            'descuento'=>$request->descuento,
+            'descuento_especial'=>$request->descuento_especial]
+        );
+        $data['cotizacion']=Cotizacion::where('id',$cotizacionID)->with('clientes')->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +79,9 @@ class CotizacionesController extends Controller
     public function edit($id)
     {
         //
+        $datos['cotizacion']=Cotizacion::findOrFail($id);
+        $datos['clientes']=Cliente::all();
+        return response()->json($datos);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalogo;
+use App\Models\Categorias;
 use Illuminate\Http\Request;
 
 class CatalogosProductosController extends Controller
@@ -15,10 +16,10 @@ class CatalogosProductosController extends Controller
     public function index()
     {
         //
-         $catalogos = Catalogo::where('status',1)->get();
-       return view('pages.catalogos.index',compact('catalogos'));
+         $datos['catalogos'] = Catalogo::where('status',1)->with('categorias')->get();
+         $datos['categorias']= Categorias::all();
+       return view('pages.catalogos.index',compact('datos'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -38,6 +39,12 @@ class CatalogosProductosController extends Controller
     public function store(Request $request)
     {
         //
+        $catalogoID = $request->id;
+        $catalogo=Catalogo::updateOrcreate(
+            ['id'=>$catalogoID],
+            ['id_categoria_producto'=>$request->id_categoria_producto,'descripcion'=>$request->descripcion,'clave'=>$request->clave,'precio_unitario'=>$request->precio_unitario,'garantia'=>$request->garantia]);
+        $data['catalogo']=Catalogo::where('id',$catalogoID)->with('categorias')->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +67,9 @@ class CatalogosProductosController extends Controller
     public function edit($id)
     {
         //
+        $datos['catalogo']= Catalogo::findOrfail($id);
+        $datos['categorias']= Categorias::all();
+        return response()->json($datos);
     }
 
     /**

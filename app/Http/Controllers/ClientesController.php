@@ -38,6 +38,12 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         //
+        $clienteID = $request->id;
+        $cliente =Cliente::updateOrCreate(
+            ['id'=> $clienteID],
+            ['nombre'=> $request->nombre, 'telefono'=>$request->telefono,'celular'=>$request->celular,'correo'=>$request->correo,'tipo'=>$request->tipo,'ubicacion'=>$request->ubicacion,'medio_captacion'=>$request->medio_captacion]);
+        $data['cliente']=Cliente::where('id',$clienteID)->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +66,8 @@ class ClientesController extends Controller
     public function edit($id)
     {
         //
+        $datos['cliente']=Cliente::findOrFail($id);
+        return response()->json($datos);
     }
 
     /**

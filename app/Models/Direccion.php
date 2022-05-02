@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,11 +15,15 @@ class Direccion extends Model
          'colonia',
          'codigo_postal',
          'municipio',
-         'estado'];
+         'estado',
+        'id_cliente'];
+    protected $hidden =[
+         'remember_token'
+    ];
 
      public function clientes()
     {
-        return $this ->hasMany(Clientes::class,'id');
+        return $this ->belongsTo(Cliente::class,'id_cliente');
     }
 
 }

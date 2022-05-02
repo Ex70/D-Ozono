@@ -72,7 +72,25 @@ Route::get('/cotizaciones',[CotizacionesController::class, 'index']); //error
 Route::get('/productos',[ProductosController::class, 'index']);
 
 Route::get('/usuario/{id}/edit',[UsuariosController::class, 'edit']);
+Route::get('categoriaproductos/{id}/edit',[CategoriasProductosController::class, 'edit']);
+Route::get('facturas/{id}/edit',[FacturasController::class, 'edit']);
+Route::get('catalogos/{id}/edit',[CatalogosProductosController::class, 'edit']);
+Route::get('permisos/{id}/edit',[PermisoController::class, 'edit']);
+Route::get('clientes/{id}/edit',[ClientesController::class, 'edit']);
+Route::get('direcciones/{id}/edit',[DireccionesController::class, 'edit']);
+Route::get('cotizaciones/{id}/edit',[CotizacionesController::class, 'edit']);
+Route::get('productos/{id}/edit',[ProductosController::class, 'edit']);
+
+
 Route::post('/usuarios1',[UsuariosController::class, 'store']);
+Route::post('/categoriaproductos',[CategoriasProductosController::class, 'store']);
+Route::post('/facturas',[FacturasController::class, 'store']);
+Route::post('/catalogos',[CatalogosProductosController::class, 'store']);
+Route::post('/permisos',[PermisoController::class, 'store']);
+Route::post('/clientes',[ClientesController::class, 'store']);
+Route::post('/direcciones',[DireccionesController::class, 'store']);
+Route::post('/productos',[ProductosController::class, 'store']);
+Route::post('/cotizaciones',[CotizacionesController::class, 'store']);
 
 // Route::prefix('usuario')->as('usuario.')->group(function() {
 //     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');

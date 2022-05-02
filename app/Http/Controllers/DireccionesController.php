@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Direccion;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class DireccionesController extends Controller
     public function index()
     {
         //
-         $datos['direcciones']=Direccion::where('status',1)->get();
-         return view('pages.direcciones.index',$datos);
+         $datos['direcciones']=Direccion::where('status',1)->with('clientes')->get();
+         $datos['clientes']=Cliente::all();
+         return view('pages.direcciones.index',compact('datos'));
     }
 
     /**
@@ -38,6 +40,12 @@ class DireccionesController extends Controller
     public function store(Request $request)
     {
         //
+        $direccionID = $request->id;
+        $direccion = Direccion::updateOrCreate(
+            ['id'=>$direccionID],
+            ['id_cliente'=>$request->id_cliente,'calle'=>$request->calle,'numero_interior'=>$request->numero_interior,'numero_exterior'=>$request->numero_exterior,'colonia'=>$request->colonia,'codigo_postal'=>$request->codigo_postal,'municipio'=>$request->municipio,'estado'=>$request->estado]);
+        $data['direccion']= Direccion::where('id',$direccionID)->with('clientes')->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +68,9 @@ class DireccionesController extends Controller
     public function edit($id)
     {
         //
+        $datos['direccion']=Direccion::findOrFail($id);
+        $datos['clientes']=Cliente::all();
+        return response()->json($datos);
     }
 
     /**

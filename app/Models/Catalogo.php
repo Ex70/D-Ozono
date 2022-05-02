@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Catalogo extends Model
 {
     use HasFactory;
-    protected $table= 'catalogo_productos';
+    protected $table ='catalogo_productos';
      protected $fillable =[
     'id_categoria_producto', 
      'descripcion',
@@ -19,4 +19,15 @@ class Catalogo extends Model
      'garantia',
      'status'    
     ];
+    
+     protected $hidden = [
+         'remember_token',
+    ];
+
+public function categorias(){
+        //Un categoria tiene muchos productos 
+        return $this->belongsTo(Categorias::class,'id_categoria_producto');
+    }
+
+
 }

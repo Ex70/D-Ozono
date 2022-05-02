@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Factura;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\Response;
 
 class FacturasController extends Controller
 {
@@ -14,9 +17,9 @@ class FacturasController extends Controller
      */
     public function index()
     {
-        //
-        $datos['facturas']=Factura::where('status',1)->get();
-        return view('pages.facturas.index',$datos);
+        $datos['facturas']= Factura::where('status',1)->with('clientes')->get();
+        $datos['clientes']= Cliente::all();
+        return view('pages.facturas.index',compact('datos'));
     }
 
     /**
@@ -38,6 +41,12 @@ class FacturasController extends Controller
     public function store(Request $request)
     {
         //
+        $facturaID=$request->id;
+        $factura = Factura::updateOrCreate(
+            ['id'=>$facturaID],
+            ['id_cliente' =>$request->id_cliente,'rfc' =>$request->rfc,'razon_social'=>$request->razon_social,'cfdi'=>$request->cfdi,'calle'=>$request->calle,'numero_interior'=>$request->numero_interior,'numero_exterior'=>$request->numero_exterior,'colonia'=>$request->colonia,'codigo_postal'=>$request->codigo_postal,'municipio'=>$request->municipio,'estado'=>$request->estado]);
+        $data['factura']=Factura::where('id',$facturaID)->with('clientes')->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +69,9 @@ class FacturasController extends Controller
     public function edit($id)
     {
         //
+        $datos['factura']=Factura::findOrFail($id);
+        $datos['clientes']=Cliente::all();
+        return response()->json($datos);
     }
 
     /**

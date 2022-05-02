@@ -9,7 +9,7 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Administración</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Permisos</li>
+    <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
   </ol>
 </nav>
 
@@ -98,7 +98,7 @@
                       <select class="form-select" id="exampleFormControlSelect1" name="id_permiso">
                         <option selected disabled>Seleccione permiso</option>
                         @foreach($datos['permisos'] as $permiso)
-                          <option value="{{$permiso->id}}" {{$usuario->id_permiso == $permiso->id ? 'selected' : ''}}>{{$permiso->descripcion}}</option>
+                          <option value="{{$permiso->id}}">{{$permiso->descripcion}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -123,6 +123,7 @@
 @push('custom-scripts')
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+
   <script>
     $(document).ready(function () {
       $.ajaxSetup({
@@ -130,7 +131,7 @@
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      $('#crear-usuario').click(function () {
+        $('#crear-usuario').click(function () {
         $('#btn-save').val("crearUsuario");
         $('#usuarioForm').trigger("reset");
         $('#usuarioModal').html("Agregar un usuario");
@@ -208,7 +209,7 @@
           url: "{{url('/usuarios1') }}",
           dataType: 'json',
           success:function (data) {
-            var post = '<tr id="usuario_id_' + data.usuario.id + '"><td>' + data.usuario.id + '</td><td>' + data.usuario.nombre + '</td><td>' + data.usuario.correo + '</td><td>' + data.usuario.usuario + '</td><td>' + data.usuario.nombre + '</td>';
+            var post = '<tr id="producto_id_' + data.producto.id + '"><td>' + data.producto.id + '</td><td>' + data.producto.id_cotizacion + '</td><td>' + data.producto.id_catalogo_producto + '</td><td>' + data.producto.subtotal + '</td><td>' + data.producto.cantidad + '</td>';
             post += '<td><a href="javascript:void(0)" id="editar-usuario" data-id="' + data.usuario.id + '" class="btn btn-info">Edit</a></td>';
             post += '<td><a href="javascript:void(0)" id="delete-post" data-id="' + data.usuario.id + '" class="btn btn-danger delete-post">Delete</a></td></tr>';
             // alert("Llegaste");
@@ -228,5 +229,5 @@
         })
       });
     });
-    </script>
+  </script>
 @endpush

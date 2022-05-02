@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Producto;
+use App\Models\Catalogo;
+use App\Models\Cotizacion;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -14,8 +16,10 @@ class ProductosController extends Controller
     public function index()
     {
         //
-          $productos = Producto::where('status',1)->get();
-           return view('pages.productos.index',compact('productos'));
+           $datos['productos'] = Producto::where('status',1)->with('catalogos','cotizaciones')->get();
+           $datos['catalogos'] = Catalogo::all(); 
+           $datos['cotizaciones']=Cotizacion::all();
+           return view('pages.productos.index',compact('datos'));
 
     }
 
@@ -38,6 +42,12 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         //
+        $productoID=$request->id;
+        $producto = Producto:: updateOrCreate(
+            ['id'=>$productoID],
+            ['id_cotizacion'=>$request->id_cotizacion,'id_catalogo_producto'=>$request->id_catalogo_producto,'subtotal'=>$request->subtotal,'cantidad'=>$request->cantidad]);
+        $data['producto']=Producto::where('id',$productoID)->with('catalogos','cotizaciones')->get();
+        return response()->json($data);
     }
 
     /**
@@ -60,6 +70,10 @@ class ProductosController extends Controller
     public function edit($id)
     {
         //
+        $datos['producto']=Producto::findOrFail($id);
+        $datos['catalogos']=Catalogo::all();
+        $datos['cotizacion']=Cotizacion::all();
+        return response ()->json($datos);
     }
 
     /**

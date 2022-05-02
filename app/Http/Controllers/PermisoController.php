@@ -38,6 +38,13 @@ class PermisoController extends Controller
     public function store(Request $request)
     {
         //
+        $permisoID = $request->id;
+        $permiso = Permiso::updateOrCreate(
+            ['id'=>$permisoID],
+            ['descripcion'=>$request->descripcion]);
+        $data['permiso']=Permiso::where('id', $permisoID)->get();
+        return response()->json($data);
+        
     }
 
     /**
@@ -60,6 +67,8 @@ class PermisoController extends Controller
     public function edit($id)
     {
         //
+        $datos['permiso']=Permiso::findOrFail($id);
+        return response()->json($datos);
     }
 
     /**

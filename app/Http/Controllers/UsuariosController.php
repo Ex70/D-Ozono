@@ -21,7 +21,7 @@ class UsuariosController extends Controller
     public function index(){
         $datos['usuarios'] = Usuario::where('status',1)->with('permisos')->get();
         $datos['permisos'] = Permiso::all();
-        return view('pages.ejemplos.usuarios',compact('datos'));
+      return view('pages.ejemplos.usuarios',compact('datos'));
     }
 
     public function create(){
