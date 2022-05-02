@@ -79,11 +79,11 @@
                   <fieldset>
                     <div class="mb-3">
                       <label for="name" class="form-label">Nombre</label>
-                      <input id="nombre" class="form-control" name="nombre" type="text" required>
+                      <input id="nombre" class="form-control" name="nombre" type="text">
                     </div>
                     <div class="mb-3">
                       <label for="email" class="form-label">Correo</label>
-                      <input id="correo" class="form-control" name="correo" type="email" required>
+                      <input id="correo" class="form-control" name="correo" type="email">
                     </div>
                     <div class="mb-3">
                       <label for="name" class="form-label">Usuario</label>
@@ -96,7 +96,7 @@
                     <div class="mb-3">
                       <label for="exampleFormControlSelect1" class="form-label">Permisos</label>
                       <select class="form-select" id="exampleFormControlSelect1" name="id_permiso">
-                        <option selected disabled>Seleccione permiso</option>
+                        <option selected disabled value="">Seleccione permiso</option>
                         @foreach($datos['permisos'] as $permiso)
                           <option value="{{$permiso->id}}">{{$permiso->descripcion}}</option>
                         @endforeach
@@ -115,9 +115,10 @@
 @endsection
 
 @push('plugin-scripts')
-    <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
+  <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -125,6 +126,62 @@
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
 
   <script>
+    $(function() {
+      'use strict';
+      $.validator.setDefaults({
+        submitHandler: function() {
+          alert("Usuario agregado");
+        }
+      });
+      $(function() {
+        $("#usuarioForm").validate({
+          rules: {
+            nombre: {
+              required: true,
+              maxlength: 255
+            },
+            correo: {
+              required: true,
+              email: true
+            },
+            usuario: {
+              required: true,
+              maxlength: 255
+            },
+            id_permiso: {
+              required: true
+            },
+            password: {
+              required: true,
+              minlength: 5
+            }
+          },
+          messages: {
+            nombre: {
+              required: "Por favor, introduzca un nombre",
+              maxlength: "El nombre no debe exceder los 255 caracteres"
+            },
+            usuario: {
+              required: "Por favor, introduzca un nombre",
+              maxlength: "El nombre no debe exceder los 255 caracteres"
+            },
+            password: {
+              required: "Por favor, introduzca una contraseña",
+              minlength: "Su contraseña debe tener más de 5 caracteres"
+            },
+            correo: "Por favor, introduzca una dirección válida de correo",
+          },
+          errorPlacement: function(label, element) {
+            label.addClass('mt-1 tx-13 text-danger');
+            label.insertAfter(element);
+          },
+          highlight: function(element, errorClass) {
+            $(element).parent().addClass('validation-error')
+            $(element).addClass('border-danger')
+          }
+        });
+      });
+    });
     $(document).ready(function () {
       $.ajaxSetup({
         headers: {

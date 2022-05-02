@@ -31,11 +31,11 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-// Route::get('/', [UserAuthController::class, 'index'])
-//     ->name('user.home')
-//     ->middleware('auth:web');
+Route::get('/', [UserAuthController::class, 'index'])
+    ->name('user.home')
+    ->middleware('auth:web');
 Route::get('/login', [UserAuthController::class, 'login'])
-    ->name('pages.ejemplos.login');
+    ->name('user.login');
 Route::post('/login', [UserAuthController::class, 'handleLogin'])
     ->name('user.handleLogin');
 Route::get('/logout', [UserAuthController::class, 'index'])

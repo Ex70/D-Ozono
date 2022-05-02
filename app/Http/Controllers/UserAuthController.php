@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserAuthController extends Controller
 {
-    public function index(){
-        return view('user.home');
+    public function index()
+    {
+        return view('dashboard');
     }
 
-    public function login(){
+    public function login()
+    {
         return view('pages.ejemplos.login');
     }
 
-    public function handleLogin(Request $req){
+    public function handleLogin(Request $req)
+    {
         if(Auth::attempt(
-            $req->only(['usuario', 'password'])
+            $req->only(['email', 'password'])
         ))
         {
             return redirect()->intended('/');
@@ -32,6 +36,7 @@ class UserAuthController extends Controller
         Auth::logout();
 
         return redirect()
-            ->route('pages.ejemplos.login');
+            ->route('user.login');
     }
+
 }
