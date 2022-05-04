@@ -87,19 +87,19 @@
                     </div>
                     <div class="mb-3">
                       <label for="descripcion" class="form-label">Descripcion</label>
-                      <input id="descripcion" class="form-control" name="descripcion" type="text" required>
+                      <input id="descripcion" class="form-control" name="descripcion" type="text" >
                     </div>
                     <div class="mb-3">
                       <label for="clave" class="form-label">Clave</label>
-                      <input id="clave" class="form-control" name="clave" type="text" required>
+                      <input id="clave" class="form-control" name="clave" type="text" >
                     </div>
                     <div class="mb-3">
                         <label for="precio_unitario class="form-label">Precio Unidad</label>
-                        <input id="precio-unidad" class="form-control" name="precio_unitario" type="text" required>
+                        <input id="precio-unidad" class="form-control" name="precio_unitario" type="text" >
                     </div>
                         <div class="mb-3">
                         <label for="garantia" class="form-label">Garantia</label>
-                        <input id="garantia" class="form-control" name="garantia" type="text" required>
+                        <input id="garantia" class="form-control" name="garantia" type="text" >
                     </div>
                     
                     <button type="submit" class="btn btn-primary" id="btn-save" value="create">Enviar</button>
@@ -120,6 +120,7 @@
   <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  
 
 
 
@@ -133,6 +134,67 @@
 
 
   <script>
+     $(function() {
+      'use strict';
+      $.validator.setDefaults({
+        submitHandler: function() {
+          //alert("Catalogo agregado");
+          Location.reload()
+        }
+      });
+      $(function() {
+        $("#catalogoForm").validate({
+          rules: {
+            id_categoria_producto: {
+              required: true,
+              
+            },
+            descripcion: {
+              required: true,
+              maxlength: 255
+            },
+            clave: {
+              required: true,
+              maxlength: 255
+            },
+            precio_unitario: {
+              required: true
+            },
+            garantia: {
+              required: true,
+            }
+          },
+          messages: {
+            id_categoria_producto: {
+              required: "Por favor, seleccione una categoria",
+            },
+            descripcion: {
+              required: "Por favor, introduzca una descripcion",
+              maxlength: "la descripcion no debe exceder los 255 caracteres"
+            },
+            clave: {
+              required: "Por favor, introduzca una clave",
+              maxlength: "la Clave no debe exceder los 255 caracteres"
+            },
+            precio_unitario: {
+              required: "Por favor, introduzca precio unitario",
+            },
+            garantia: "Por favor, introduzca la garantia del producto",
+          },
+          errorPlacement: function(label, element) {
+            label.addClass('mt-1 tx-13 text-danger');
+            label.insertAfter(element);
+          },
+          highlight: function(element, errorClass) {
+            $(element).parent().addClass('validation-error')
+            $(element).addClass('border-danger')
+          }
+        });
+      });
+    });
+
+
+
     $(document).ready(function () {
       $.ajaxSetup({
         headers: {

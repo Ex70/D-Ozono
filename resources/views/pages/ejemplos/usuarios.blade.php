@@ -131,6 +131,7 @@
       $.validator.setDefaults({
         submitHandler: function() {
           alert("Usuario agregado");
+          Location.reload()
         }
       });
       $(function() {

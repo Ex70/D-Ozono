@@ -76,7 +76,7 @@
                    <fieldset>
                     <div class="mb-3">
                       <label for="name" class="form-label">Descripcion</label>
-                      <input id="descripcion" class="form-control" name="descripcion" type="text" required>
+                      <input id="descripcion" class="form-control" name="descripcion" type="text">
                     </div>
                    <button type="submit" class="btn btn-primary" id="btn-save" value="create">Enviar</button>
                   </fieldset>
@@ -106,7 +106,40 @@
   <script src="{{ asset('assets/js/form-validation.js') }}"></script>
 
   <script> 
-   $('#categoriaForm').validate()    
+    $(function() {
+      'use strict';
+      $.validator.setDefaults({
+        submitHandler: function() {
+          //alert("Catalogo agregado");
+          Location.reload()
+        }
+      });
+      $(function() {
+        $("#categoriaForm").validate({
+            descripcion: {
+              required: true,
+              maxlength: 255
+            },
+            
+          messages: {
+           
+            descripcion: {
+              required: "Por favor, introduzca una descripcion",
+              maxlength: "la descripcion no debe exceder los 255 caracteres"
+            },
+         
+          errorPlacement: function(label, element) {
+            label.addClass('mt-1 tx-13 text-danger');
+            label.insertAfter(element);
+          },
+          highlight: function(element, errorClass) {
+            $(element).parent().addClass('validation-error')
+            $(element).addClass('border-danger')
+          }
+        });
+      });
+    });
+
   </script>
 
   <script type="text/javascript">
