@@ -49,7 +49,7 @@
                     <!-- Botones de edición -->
                     {{-- El data-id sirve para manmdar el id a la función del formulario --}}
                     <a id="editar-usuario" data-id="{{$usuario->id}}" type="button" class="btn btn-outline-dark" data-bs-toggle="modal">Editar</a>
-                    <a id="borrar-usuario" data-id="{{$usuario->id}}" type="button" class="btn btn-danger">Editar</a>
+                    <a id="borrar-usuario" data-id="{{$usuario->id}}" type="button" class="btn btn-danger">Eliminar</a>
                     {{-- <button class="btn btn-danger" onclick="deleteConfirmation({{$usuario->id}})">Eliminar</button> --}}
                     {{-- <button class="btn btn-outline-danger" onclick="showSwal('passing-parameter-execute-cancel')">Eliminar</button> --}}
                 </td>
@@ -130,8 +130,7 @@
       'use strict';
       $.validator.setDefaults({
         submitHandler: function() {
-          alert("Usuario agregado");
-          Location.reload()
+          // alert("Usuario agregado");
         }
       });
       $(function() {
@@ -267,14 +266,13 @@
           url: "{{url('/usuarios1') }}",
           dataType: 'json',
           success:function (data) {
-            var post = '<tr id="producto_id_' + data.producto.id + '"><td>' + data.producto.id + '</td><td>' + data.producto.id_cotizacion + '</td><td>' + data.producto.id_catalogo_producto + '</td><td>' + data.producto.subtotal + '</td><td>' + data.producto.cantidad + '</td>';
-            post += '<td><a href="javascript:void(0)" id="editar-usuario" data-id="' + data.usuario.id + '" class="btn btn-info">Edit</a></td>';
-            post += '<td><a href="javascript:void(0)" id="delete-post" data-id="' + data.usuario.id + '" class="btn btn-danger delete-post">Delete</a></td></tr>';
-            // alert("Llegaste");
+            var post = '<tr id="usuario_id_' + data[0].id + '"><td>' + data[0].id + '</td><td>' + data[0].nombre + '</td><td>' + data[0].correo + '</td><td>' + data[0].usuario + '</td><td>' + data[0].permisos.descripcion + '</td>';
+            post += '<td><a href="javascript:void(0)" id="editar-usuario" data-id="' + data[0].id + '" class="btn btn-outline-dark">Editar</a>';
+            post += '<a href="javascript:void(0)" id="borrar-usuario" data-id="' + data[0].id + '" class="btn btn-danger delete-post">Eliminar</a></td></tr>';
             if (actionType == "crearUsuario") {
               $('#usuarios-crud').prepend(post);
             } else {
-              $("#usuario_id_" + data.usuario.id).replaceWith(post);
+              $("#usuario_id_" + data[0].id).replaceWith(post);
             }
             $('#usuarioForm').trigger("reset");
             $('#ajax-crud-modal').modal('hide');

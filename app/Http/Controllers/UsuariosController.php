@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Permiso;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Symfony\Component\HttpFoundation\Response;
 
 class UsuariosController extends Controller
 {
@@ -38,8 +36,10 @@ class UsuariosController extends Controller
             // Mando todos los datos que se van a actualizar/insertar en la BD
             ['nombre' => $request->nombre, 'correo' => $request->correo, 'usuario' => $request->usuario, 'password' => $request->password, 'id_permiso' => $request->id_permiso]);
         //Finalmente, vuelvo a traer el usuario que edité
-        $data['usuario']=Usuario::where('id',$usuarioID)->with('permisos')->get();
+        $usuarioID = $usuario->id;
+        $data=Usuario::where('id',$usuarioID)->with('permisos')->get();
         // Y vuelvo a mandar todo en formato json
+        // return Response::json($data);
         return response()->json($data);
     }
 
