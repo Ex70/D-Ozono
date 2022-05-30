@@ -454,6 +454,25 @@
             <i class="link-icon" data-feather="hash"></i>
             <span class="menu-title">Documentation</span></a>
         </li>
+        <li class="nav-item {{ active_class(['icons/*']) }}">
+          <a href="#" class="nav-link">
+            <i class="link-icon" data-feather="smile"></i>
+            <span class="menu-title">Administración</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <li class="nav-item"><a href="{{ url('/catalogos') }}" class="nav-link {{ active_class(['icons/feather-icons']) }}">Catálogos</a></li>
+              <li class="nav-item"><a href="{{ url('/categoriaproductos') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Categorías</a></li>
+              <li class="nav-item"><a href="{{ url('/clientes') }}" class="nav-link {{ active_class(['icons/mdi-icons']) }}">Clientes</a></li>
+              <li class="nav-item"><a href="{{ url('/cotizaciones') }}" class="nav-link {{ active_class(['icons/feather-icons']) }}">Cotizaciones</a></li>
+              <li class="nav-item"><a href="{{ url('/direcciones') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Direcciones</a></li>
+              <li class="nav-item"><a href="{{ url('/usuarios') }}" class="nav-link {{ active_class(['icons/mdi-icons']) }}">Usuarios</a></li>
+              <li class="nav-item"><a href="{{ url('/facturas') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Facturas</a></li>
+              <li class="nav-item"><a href="{{ url('/productos') }}" class="nav-link {{ active_class(['icons/mdi-icons']) }}">Productos</a></li>
+            </ul>
+          </div>
+        </li>
       </ul>
     </div>
   </nav>

@@ -16,7 +16,7 @@ class PermisoController extends Controller
     public function index()
     {
         $permisos = Permiso::where('status',1)->get();
-        return view('pages.ejemplos.crud-form',compact('permisos'));
+        return view('pages.permisos.index',compact('permisos'));
     }
 
     /**
@@ -42,7 +42,8 @@ class PermisoController extends Controller
         $permiso = Permiso::updateOrCreate(
             ['id'=>$permisoID],
             ['descripcion'=>$request->descripcion]);
-        $data['permiso']=Permiso::where('id', $permisoID)->get();
+        $permisoID = $permiso->id;
+        $data=Permiso::where('id', $permisoID)->get();
         return response()->json($data);
         
     }

@@ -20,7 +20,7 @@ class UserAuthController extends Controller
     public function handleLogin(Request $req)
     {
         if(Auth::attempt(
-            $req->only(['email', 'password'])
+            $req->only(['correo', 'password'])
         ))
         {
             return redirect()->intended('/');

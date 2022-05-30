@@ -165,6 +165,9 @@
               required: "Por favor, introduzca un nombre",
               maxlength: "El nombre no debe exceder los 255 caracteres"
             },
+            id_permiso: {
+              required: "Por favor, seleccione un permiso"
+            },
             password: {
               required: "Por favor, introduzca una contraseña",
               minlength: "Su contraseña debe tener más de 5 caracteres"

@@ -17,29 +17,24 @@
               <a href="#" class="noble-ui-logo d-block mb-2">D'Ozono <span>Purificadores</span></a>
               <h5 class="text-muted fw-normal mb-4">¡Bienvenido de nuevo! Loguéate en tu cuenta.</h5>
               <form class="forms-sample" action="{{route('user.handleLogin')}}" method="POST">
+                @csrf
                 <div class="mb-3">
                   <label for="userEmail" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" name="usuario" id="userEmail" placeholder="Usuario">
+                  <input type="text" class="form-control" name="email" id="userEmail" placeholder="Usuario">
                 </div>
                 <div class="mb-3">
                   <label for="userPassword" class="form-label">Contraseña</label>
                   <input type="password" class="form-control" name="password" id="userPassword" autocomplete="current-password" placeholder="Contraseña">
                 </div>
-                <div class="form-check mb-3">
-                  <input type="checkbox" class="form-check-input" id="authCheck">
-                  <label class="form-check-label" for="authCheck">
-                    Recordar Datos
-                  </label>
-                </div>
                 <div>
-                  <a href="{{ url('/') }}" class="btn btn-primary me-2 mb-2 mb-md-0">Iniciar Sesión</a>
+                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Iniciar Sesión</button>
                   {{-- <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                     <i class="btn-icon-prepend" data-feather="twitter"></i>
                     Login with twitter
                   </button> --}}
                 </div>
-                <a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">¿No eres usuario? Registrar</a>
               </form>
+              <a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">¿No eres usuario? Registrar</a>
             </div>
           </div>
         </div>
