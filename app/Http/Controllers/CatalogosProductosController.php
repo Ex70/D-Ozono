@@ -15,10 +15,9 @@ class CatalogosProductosController extends Controller
      */
     public function index()
     {
-        //
-         $datos['catalogos'] = Catalogo::where('status',1)->with('categorias')->get();
-         $datos['categorias']= Categorias::all();
-       return view('pages.catalogos.index',compact('datos'));
+        $datos['catalogos'] = Catalogo::where('status',1)->with('categorias')->get();
+        $datos['categorias']= Categorias::all();
+        return view('pages.catalogos.index',compact('datos'));
     }
     /**
      * Show the form for creating a new resource.
@@ -38,12 +37,12 @@ class CatalogosProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $catalogoID = $request->id;
         $catalogo=Catalogo::updateOrcreate(
             ['id'=>$catalogoID],
             ['id_categoria_producto'=>$request->id_categoria_producto,'descripcion'=>$request->descripcion,'clave'=>$request->clave,'precio_unitario'=>$request->precio_unitario,'garantia'=>$request->garantia]);
-        $data['catalogo']=Catalogo::where('id',$catalogoID)->with('categorias')->get();
+        $catalogoID = $catalogo->id;
+        $data=Catalogo::where('id',$catalogoID)->with('categorias')->get();
         return response()->json($data);
     }
 

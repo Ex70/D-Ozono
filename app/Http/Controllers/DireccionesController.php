@@ -16,9 +16,9 @@ class DireccionesController extends Controller
     public function index()
     {
         //
-         $datos['direcciones']=Direccion::where('status',1)->with('clientes')->get();
-         $datos['clientes']=Cliente::all();
-         return view('pages.direcciones.index',compact('datos'));
+        $datos['direcciones']=Direccion::where('status',1)->with('clientes')->get();
+        $datos['clientes']=Cliente::all();
+        return view('pages.direcciones.index',compact('datos'));
     }
 
     /**
@@ -39,12 +39,17 @@ class DireccionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(empty($request->numero_interior)){
+            $num_interior = '';
+        }else{
+            $num_interior = $request->numero_interior;
+        }
         $direccionID = $request->id;
         $direccion = Direccion::updateOrCreate(
             ['id'=>$direccionID],
-            ['id_cliente'=>$request->id_cliente,'calle'=>$request->calle,'numero_interior'=>$request->numero_interior,'numero_exterior'=>$request->numero_exterior,'colonia'=>$request->colonia,'codigo_postal'=>$request->codigo_postal,'municipio'=>$request->municipio,'estado'=>$request->estado]);
-        $data['direccion']= Direccion::where('id',$direccionID)->with('clientes')->get();
+            ['id_cliente'=>$request->id_cliente,'calle'=>$request->calle,'numero_interior'=>$num_interior,'numero_exterior'=>$request->numero_exterior,'colonia'=>$request->colonia,'codigo_postal'=>$request->codigo_postal,'municipio'=>$request->municipio,'estado'=>$request->estado]);
+        $direccionID = $direccion->id;
+        $data= Direccion::where('id',$direccionID)->with('clientes')->get();
         return response()->json($data);
     }
 

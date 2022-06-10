@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cotizacion;
 use App\Models\Cliente;
+use App\Models\Direccion;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class CotizacionesController extends Controller
@@ -107,10 +109,9 @@ class CotizacionesController extends Controller
         //
     }
 
-     public function status($id)
-    {
-         Cotizacion::where('id',$id)->update(['status'=>0]);
-         $cotizacion=Cotizacion::where('id',$id)->get();
+    public function status($id){
+        Cotizacion::where('id',$id)->update(['status'=>0]);
+        $cotizacion=Cotizacion::where('id',$id)->get();
         if (!empty($cotizacion)){
             $success = true;
             $message = "Registo eliminado exitosamente";
@@ -118,11 +119,27 @@ class CotizacionesController extends Controller
             $success = true;
             $message = "Rgistro no eliminado";
         }
-
         return response () -> json([
             'success'=> $success,
             'message'=> $message,
-        ]);     
+        ]);
+    }
 
+    public function mantenimiento($id){
+        $datos['cotizacion'] = Cotizacion::where('id',1)->with('clientes')->get();
+        $datos['productos'] = Producto::where('id_cotizacion',1)->with('catalogos')->get();
+        $datos['suma']=Producto::where('id_cotizacion',1)->sum('subtotal');
+        $datos['direccion'] = Direccion::where('id_cliente',1)->first();
+        // dd ($datos);
+        return view('pages.cotizaciones.mantenimiento',compact('datos'));
+    }
+
+    public function mantenimientonuevo(){
+        // $datos['cotizacion'] = Cotizacion::where('id',1)->with('clientes')->get();
+        // $datos['productos'] = Producto::where('id_cotizacion',1)->with('catalogos')->get();
+        // $datos['suma']=Producto::where('id_cotizacion',1)->sum('subtotal');
+        // $datos['direccion'] = Direccion::where('id_cliente',1)->first();
+        // dd ($datos);
+        return view('pages.cotizaciones.editar');
     }
 }

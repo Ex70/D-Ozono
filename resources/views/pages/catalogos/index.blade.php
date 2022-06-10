@@ -9,7 +9,7 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Administración</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Catálogos</li>
+    <li class="breadcrumb-item active" aria-current="page">Catálogo de productos</li>
   </ol>
 </nav>
 
@@ -19,13 +19,12 @@
       <div class="card-body">
         <div class="row">
           <div class="col-6">
-            <h6 class="card-title">Catalogos</h6>
+            <h6 class="card-title">Catalogo de productos</h6>
           </div>
           <div class="col-6">
             <a href="javascript:void(0)" class="btn btn-success mb-2" id="crear-catalogo" style="float: right;">Agregar producto</a>
           </div>
         </div>
-
         <div class="table-responsive">
           <table id="dataTableExample" class="table">
             <thead>
@@ -49,9 +48,8 @@
                   <td>{{$catalogo->precio_unitario}}</td>
                   <td>{{$catalogo->garantia}}</td>
                   <td>
-                      
                     <a id="editar-catalogo" data-id="{{$catalogo->id}}" type="button" class="btn btn-outline-dark" data-bs-toggle="modal">Editar</a>
-                    <button class="btn btn-danger" onclick="deleteConfirmation({{$catalogo->id}})">Eliminar</button>
+                    <a id="borrar-catalogo" data-id="{{$catalogo->id}}" type="button" class="btn btn-danger">Eliminar</a>
                 </td>
               </tr>
               @endforeach
@@ -101,7 +99,6 @@
                         <label for="garantia" class="form-label">Garantia</label>
                         <input id="garantia" class="form-control" name="garantia" type="text" >
                     </div>
-                    
                     <button type="submit" class="btn btn-primary" id="btn-save" value="create">Enviar</button>
                   </fieldset>
                 </form>
@@ -120,26 +117,19 @@
   <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-  
-
-
-
 @endpush
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
   <script src="{{ asset('assets/js/form-validation.js') }}"></script>
-
-
-
   <script>
-     $(function() {
+    $(function() {
       'use strict';
       $.validator.setDefaults({
         submitHandler: function() {
           //alert("Catalogo agregado");
-          Location.reload()
+          // Location.reload()
         }
       });
       $(function() {
@@ -147,7 +137,6 @@
           rules: {
             id_categoria_producto: {
               required: true,
-              
             },
             descripcion: {
               required: true,
@@ -192,9 +181,6 @@
         });
       });
     });
-
-
-
     $(document).ready(function () {
       $.ajaxSetup({
         headers: {
@@ -221,7 +207,7 @@
           $('#garantia').val(data.catalogo.garantia);
         })
       });
-      $('body').on('click', '#borrar-usuario', function () {
+      $('body').on('click', '#borrar-catalogo', function () {
         var id = $(this).data("id");
         swal.fire({
           title: "¿Eliminar?",
@@ -236,7 +222,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               type: 'POST',
-              url: "{{url('/usuarios1')}}/" + id,
+              url: "{{url('/catalogos')}}/" + id,
               data: {_token: CSRF_TOKEN},
               dataType: 'JSON',
               success: function (results) {
@@ -279,12 +265,11 @@
           url: "{{url('/catalogos') }}",
           dataType: 'json',
           success:function (data) {
-            var post = '<tr id="categoria_id_' + data.catalogo.id + '"><td>' + data.catalogo.id + '</td><td>' + data.catalogo.id_categoria_producto + '</td><td>' + data.catalogo.descripcion + '</td><td>' + data.catalogo.clave + '</td><td>' + data.catalogo.precio_unitario + '</td><td>' + data.catalogo.garantia + '</td>';
-            post += '<td><a href="javascript:void(0)" id="editar-catalogo" data-id="' + data.catalogo.id + '" class="btn btn-info">Edit</a></td>';
-            post += '<td><a href="javascript:void(0)" id="delete-post" data-id="' + data.catalogo.id + '" class="btn btn-danger delete-post">Delete</a></td></tr>';
-            //alert("Llegaste");
+            var post = '<tr id="categoria_id_' + data[0].id + '"><td>' + data[0].id + '</td><td>' + data[0].id_categoria_producto + '</td><td>' + data[0].categorias.descripcion + '</td><td>' + data[0].clave + '</td><td>' + data[0].precio_unitario + '</td><td>' + data[0].garantia + '</td>';
+            post += '<td><a href="javascript:void(0)" id="editar-catalogo" data-id="' + data[0].id + '" class="btn btn-outline-dark">Editar</a>';
+            post += '<a href="javascript:void(0)" id="borrar-catalogo" data-id="' + data[0].id + '" class="btn btn-danger delete-post">Eliminar</a></td></tr>';
             if (actionType == "crearCatalogo") {
-              $('#catalogos-crud').prepend(post);
+              $('#catalogos-crud').append(post);
             } else {
               $("#catalogos_id_" + data.catalogo.id).replaceWith(post);
             }
@@ -300,52 +285,4 @@
       });
     });
   </script>
-
-
-
-
-   <script type="text/javascript">
-  function deleteConfirmation(id) {
-    swal.fire({
-    title: "¿Eliminar?",
-    text: "!Favor de confirmar!",
-    type: "warning",
-    showCancelButton: !0,
-    confirmButtonText: "Si, Eliminar!",
-    cancelButtonText: "No, cancelar!",
-    reverseButtons: !0
-    }).then(function (e) {
-       if (e.value === true) {
-       var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-       $.ajax({
-          type: 'POST',
-          url: "{{url('/catalogos')}}/" + id,
-          data: {_token: CSRF_TOKEN},
-          dataType: 'JSON',
-    
-          success: function (results) {
-            if (results.success === true) {
-               // alert("funciono");
-                swal.fire("!Hecho!", results.message, "success");
-                document.location.reload();
-              
-            } 
-            else {
-                //alert("no funciono");
-                swal.fire("!Error!", results.message, "error");
-            }
-            
-          }
-        });
-      } 
-       else {
-          e.dismiss;
-       }
-      }, function (dismiss) {
-         return false;
-      }
-      ) 
-}
-</script>
 @endpush

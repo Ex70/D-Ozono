@@ -19,16 +19,13 @@ class UserAuthController extends Controller
 
     public function handleLogin(Request $req)
     {
-        if(Auth::attempt(
-            $req->only(['correo', 'password'])
-        ))
+        // dd($req->all());
+        if(Auth::attempt($req->only(['email', 'password'])))
         {
-            return redirect()->intended('/');
+            return redirect()->route('user.home');
         }
 
-        return redirect()
-            ->back()
-            ->with('error', 'Invalid Credentials');
+        return redirect()->back()->with('error', 'Invalid Credentials');
     }
 
     public function logout()

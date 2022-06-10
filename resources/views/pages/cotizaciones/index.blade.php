@@ -3,6 +3,7 @@
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/datatables-net/dataTables.bootstrap4.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -45,12 +46,12 @@
                 </tr>
             </thead>
             <tbody id="cotizaciones-crud">
-                @foreach($datos['cotizaciones'] as $cotizacion)
-                 <tr id="cotizacion_id_{{$cotizacion->id}}">
+              @foreach($datos['cotizaciones'] as $cotizacion)
+                <tr id="cotizacion_id_{{$cotizacion->id}}">
                     <td>{{$cotizacion->id}}</td>
                     <td>{{$cotizacion->clientes->nombre}}</td>
                     <td>{{$cotizacion->tipo}}</td>
-                    <td>{{$cotizacion->fecha}}</td> 
+                    <td>{{$cotizacion->fecha}}</td>
                     <td>{{$cotizacion->notas}}</td>
                     <td>{{$cotizacion->tipo_pago}}</td>
                     <td>{{$cotizacion->tiempo_entrega}}</td>
@@ -104,6 +105,10 @@
                         <label for="fecha" class="form-label">Fecha</label>
                         <input id="fecha" class="form-control" name="fecha" type="text" required>
                     </div>
+                    <div class="input-group date datepicker" id="datePickerExample">
+                      <input type="text" class="form-control" id="fecha" name="fecha">
+                      <span class="input-group-text input-group-addon"><i data-feather="calendar"></i></span>
+                    </div>
                      <div class="mb-3">
                          <label for="notas" class="form-label">Notas</label>
                          <input id="notas" class="form-control" name="notas" type="text" required>
@@ -156,6 +161,7 @@
     <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
 @endpush
 
@@ -163,6 +169,8 @@
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
     <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
     <script src="{{ asset('assets/js/form-validation.js') }}"></script>
+    
+  <script src="{{ asset('assets/js/datepicker.js') }}"></script>
 
 
       <script>

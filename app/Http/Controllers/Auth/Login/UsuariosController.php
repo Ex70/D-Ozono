@@ -18,7 +18,7 @@ class UsuariosController extends DefaultLoginController
     }
     public function username()
     {
-        return 'usuario';
+        return 'email';
     }
     protected function guard()
     {

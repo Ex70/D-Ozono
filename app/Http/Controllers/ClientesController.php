@@ -35,20 +35,19 @@ class ClientesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
         $clienteID = $request->id;
         $cliente =Cliente::updateOrCreate(
             ['id'=> $clienteID],
             ['nombre'=> $request->nombre, 'telefono'=>$request->telefono,'celular'=>$request->celular,'correo'=>$request->correo,'tipo'=>$request->tipo,'ubicacion'=>$request->ubicacion,'medio_captacion'=>$request->medio_captacion]);
-        $data['cliente']=Cliente::where('id',$clienteID)->get();
+        $clienteID = $cliente->id;
+        $data=Cliente::where('id',$clienteID)->get();
         return response()->json($data);
     }
 
     /**
      * Display the specified resource.
-     *
+     *  
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

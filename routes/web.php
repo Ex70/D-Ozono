@@ -80,7 +80,8 @@ Route::get('clientes/{id}/edit',[ClientesController::class, 'edit']);
 Route::get('direcciones/{id}/edit',[DireccionesController::class, 'edit']);
 Route::get('cotizaciones/{id}/edit',[CotizacionesController::class, 'edit']);
 Route::get('productos/{id}/edit',[ProductosController::class, 'edit']);
-
+Route::get('general/mantenimiento/{id}',[CotizacionesController::class, 'mantenimiento']);
+Route::get('general/crear-mantenimiento',[CotizacionesController::class, 'mantenimientonuevo']);
 
 Route::post('/usuarios1',[UsuariosController::class, 'store']);
 Route::post('/categoriaproductos',[CategoriasProductosController::class, 'store']);
@@ -179,6 +180,7 @@ Route::group(['prefix' => 'general'], function(){
     Route::get('blank-page', function () { return view('pages.general.blank-page'); });
     Route::get('faq', function () { return view('pages.general.faq'); });
     Route::get('invoice', function () { return view('pages.general.invoice'); });
+    Route::get('mantenimiento', function () { return view('pages.cotizaciones.mantenimiento'); });
     Route::get('profile', function () { return view('pages.general.profile'); });
     Route::get('pricing', function () { return view('pages.general.pricing'); });
     Route::get('timeline', function () { return view('pages.general.timeline'); });

@@ -36,21 +36,13 @@ class CategoriasProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-  public function store(Request $request)
- 
-    {
-
-          // Obtengo el ID del usuario si es que se está editando
+  public function store(Request $request){
       $CategoriaID = $request->id;
-        // // Hago uso del método updateOrCreate
       $categoria = Categorias::updateOrCreate(
-        //     // Si hay un id, lo igualo con el que traigo en el request y Laravel interpreta que será un update
           ['id' => $CategoriaID],
-        //     // Mando todos los datos que se van a actualizar/insertar en la BD
           ['descripcion' => $request->descripcion]);
-        // //Finalmente, vuelvo a traer el usuario que edité
-      $data['categoria']=Categorias::where('id',$CategoriaID)->get();
-        // // Y vuelvo a mandar todo en formato json
+      $CategoriaID = $categoria->id;
+      $data=Categorias::where('id',$CategoriaID)->get();
       return response()->json($data);
     }
 

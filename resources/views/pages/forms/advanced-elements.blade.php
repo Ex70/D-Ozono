@@ -270,7 +270,6 @@
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
     <div class="card">
