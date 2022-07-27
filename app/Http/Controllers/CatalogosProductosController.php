@@ -13,10 +13,9 @@ class CatalogosProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $datos['catalogos'] = Catalogo::where('status',1)->with('categorias')->get();
-        $datos['categorias']= Categorias::all();
+        $datos['categorias']= Categorias::where('status',1)->get();
         return view('pages.catalogos.index',compact('datos'));
     }
     /**
@@ -96,8 +95,8 @@ class CatalogosProductosController extends Controller
 
     public function status($id)
     {
-         Catalogo::where('id',$id)->update(['status'=>0]);
-         $Catalogo=Catalogo::where('id',$id)->get();
+        Catalogo::where('id',$id)->update(['status'=>0]);
+        $Catalogo=Catalogo::where('id',$id)->get();
         if (!empty($Catalogo)){
             $success = true;
             $message = "Registo eliminado exitosamente";
@@ -110,5 +109,30 @@ class CatalogosProductosController extends Controller
             'success'=> $success,
             'message'=> $message,
         ]);
+    }
+
+    public function productoCotizacion($idProducto,$folio){
+        $producto = Catalogo::findOrfail($idProducto);
+        // $producto->
+    }
+
+    public function getPrice(){
+        $getPrice = $_GET['id'];
+        $price  = DB::table('orders')->where('id', $getPrice)->get();
+        return Response::json($price);
+    }
+
+    public function ingresarProductos(Request $request){
+        // $catalogoID = $request->id;
+        $catalogo=Catalogo::Create([
+            'id_cotizacion'=>$request->id_categoria_producto,
+            'descripcion'=>$request->descripcion,
+            'clave'=>$request->clave,
+            'precio_unitario'=>$request->precio_unitario,
+            'garantia'=>$request->garantia
+        ]);
+        // $catalogoID = $catalogo->id;
+        // $data=Catalogo::where('id',$catalogoID)->with('categorias')->get();
+        return response()->json($catalogo);
     }
 }

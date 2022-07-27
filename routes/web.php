@@ -23,7 +23,7 @@ use App\Http\Controllers\DireccionesController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\CotizacionesController;
 use App\Http\Controllers\ProductosController;
-
+use App\Http\Controllers\ReceiptController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -32,14 +32,19 @@ Route::get('/', function () {
 // Auth::routes();
 
 Route::get('/', [UserAuthController::class, 'index'])
-    ->name('user.home')
-    ->middleware('auth:web');
+    ->name('user.home');
+    // ->middleware('auth:web');
 Route::get('/login', [UserAuthController::class, 'login'])
     ->name('user.login');
 Route::post('/login', [UserAuthController::class, 'handleLogin'])
     ->name('user.handleLogin');
 Route::get('/logout', [UserAuthController::class, 'index'])
     ->name('user.logout');
+
+Route::get('/billReciept',[ReceiptController::class,'index']);
+Route::get('/getPrice/{id}',[ReceiptController::class,'getPrice']);
+// Route::get('/billReciept','RecieptController@index');
+// Route::get('/getPrice/{id}', 'RecieptController@getPrice'); // for get city list
 
 
 Route::get('admin/', [AdminAuthController::class, 'index'])
@@ -59,6 +64,8 @@ Route::get('/catalogos',[CatalogosProductosController::class, 'index']);
 Route::get('/facturas',[FacturasController::class, 'index']);
 Route::get('/direcciones',[DireccionesController::class, 'index']);
 Route::get('/clientes',[ClientesController::class, 'index']);
+// ->middleware('auth:web');
+Route::get('/clientesajax',[ClientesController::class, 'dataAjax']);
 Route::post('clientes/{id}',[ClientesController::class, 'status']);
 Route::post('cotizaciones/{id}',[CotizacionesController::class, 'status']);
 Route::post('facturas/{id}',[FacturasController::class, 'status']);
@@ -77,6 +84,7 @@ Route::get('facturas/{id}/edit',[FacturasController::class, 'edit']);
 Route::get('catalogos/{id}/edit',[CatalogosProductosController::class, 'edit']);
 Route::get('permisos/{id}/edit',[PermisoController::class, 'edit']);
 Route::get('clientes/{id}/edit',[ClientesController::class, 'edit']);
+Route::get('clientes/{id}/datos',[ClientesController::class, 'datosCliente']);
 Route::get('direcciones/{id}/edit',[DireccionesController::class, 'edit']);
 Route::get('cotizaciones/{id}/edit',[CotizacionesController::class, 'edit']);
 Route::get('productos/{id}/edit',[ProductosController::class, 'edit']);
@@ -92,7 +100,7 @@ Route::post('/clientes',[ClientesController::class, 'store']);
 Route::post('/direcciones',[DireccionesController::class, 'store']);
 Route::post('/productos',[ProductosController::class, 'store']);
 Route::post('/cotizaciones',[CotizacionesController::class, 'store']);
-
+Route::post('/ingresarProductosCotizacion',[ProductosController::class, 'ingresarProductos']);
 // Route::prefix('usuario')->as('usuario.')->group(function() {
 //     Route::get('/', 'Home\UsuariosHomeController@index')->name('home');
 //     Route::namespace('Auth\Login')->group(function() {

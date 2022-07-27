@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catalogo;
+use App\Models\Categorias;
 use App\Models\Cotizacion;
 use App\Models\Cliente;
 use App\Models\Direccion;
 use App\Models\Producto;
+use CatalogoProductos;
 use Illuminate\Http\Request;
 
 class CotizacionesController extends Controller
@@ -39,6 +42,28 @@ class CotizacionesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     //
+    //     $cotizacionID= $request->id;
+    //     $cotizacion =Cotizacion::updateOrCreate(
+    //         ['id'=>$cotizacionID],
+    //         ['id_cliente'=>$request->id_cliente,
+    //         'tipo'=>$request->tipo,
+    //         'fecha'=>$request->fecha,
+    //         'notas'=>$request->notas,
+    //         'tipo_pago'=>$request->tipo_pago,
+    //         'tiempo_entrega'=>$request->tiempo_entrega,
+    //         'vigencia'=>$request->vigencia,
+    //         'condiciones'=>$request->condiciones,
+    //         'total'=>$request->total,
+    //         'descuento'=>$request->descuento,
+    //         'descuento_especial'=>$request->descuento_especial]
+    //     );
+    //     $data['cotizacion']=Cotizacion::where('id',$cotizacionID)->with('clientes')->get();
+    //     return response()->json($data);
+    // }
+
     public function store(Request $request)
     {
         //
@@ -140,6 +165,8 @@ class CotizacionesController extends Controller
         // $datos['suma']=Producto::where('id_cotizacion',1)->sum('subtotal');
         // $datos['direccion'] = Direccion::where('id_cliente',1)->first();
         // dd ($datos);
-        return view('pages.cotizaciones.editar');
+        $datos['productos'] = Catalogo::where('id_categoria_producto',2)->get();
+        $datos['folio'] = Cotizacion::latest('id')->first();
+        return view('pages.cotizaciones.editar',compact('datos'));
     }
 }

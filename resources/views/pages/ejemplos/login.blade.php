@@ -19,8 +19,8 @@
               <form class="forms-sample" action="{{route('user.handleLogin')}}" method="POST">
                 @csrf
                 <div class="mb-3">
-                  <label for="userEmail" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" name="email" id="userEmail" placeholder="Usuario">
+                  <label for="userEmail" class="form-label">Correo</label>
+                  <input type="text" class="form-control" name="email" id="userEmail" placeholder="Correo electrónico">
                 </div>
                 <div class="mb-3">
                   <label for="userPassword" class="form-label">Contraseña</label>

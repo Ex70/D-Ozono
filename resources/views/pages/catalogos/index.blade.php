@@ -265,7 +265,7 @@
           url: "{{url('/catalogos') }}",
           dataType: 'json',
           success:function (data) {
-            var post = '<tr id="categoria_id_' + data[0].id + '"><td>' + data[0].id + '</td><td>' + data[0].id_categoria_producto + '</td><td>' + data[0].categorias.descripcion + '</td><td>' + data[0].clave + '</td><td>' + data[0].precio_unitario + '</td><td>' + data[0].garantia + '</td>';
+            var post = '<tr id="categoria_id_' + data[0].id + '"><td>' + data[0].id + '</td><td>' + data[0].categorias.descripcion + '</td><td>' + data[0].descripcion + '</td><td>' + data[0].clave + '</td><td>' + data[0].precio_unitario + '</td><td>' + data[0].garantia + '</td>';
             post += '<td><a href="javascript:void(0)" id="editar-catalogo" data-id="' + data[0].id + '" class="btn btn-outline-dark">Editar</a>';
             post += '<a href="javascript:void(0)" id="borrar-catalogo" data-id="' + data[0].id + '" class="btn btn-danger delete-post">Eliminar</a></td></tr>';
             if (actionType == "crearCatalogo") {

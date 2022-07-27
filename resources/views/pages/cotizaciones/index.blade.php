@@ -105,10 +105,10 @@
                         <label for="fecha" class="form-label">Fecha</label>
                         <input id="fecha" class="form-control" name="fecha" type="text" required>
                     </div>
-                    <div class="input-group date datepicker" id="datePickerExample">
+                    {{-- <div class="input-group date datepicker" id="datePickerExample">
                       <input type="text" class="form-control" id="fecha" name="fecha">
                       <span class="input-group-text input-group-addon"><i data-feather="calendar"></i></span>
-                    </div>
+                    </div> --}}
                      <div class="mb-3">
                          <label for="notas" class="form-label">Notas</label>
                          <input id="notas" class="form-control" name="notas" type="text" required>

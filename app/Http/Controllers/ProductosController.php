@@ -115,6 +115,18 @@ class ProductosController extends Controller
             'success'=> $success,
             'message'=> $message,
         ]);
-    
+    }
+
+    public function ingresarProductos(Request $request){
+        // $catalogoID = $request->id;
+        $catalogo=Producto::Create([
+            'id_cotizacion'=>$request->id_cotizacion,
+            'id_catalogo_producto'=>$request->id_catalogo_producto,
+            'subtotal'=>$request->subtotal,
+            'cantidad'=>$request->cantidad
+        ]);
+        // $catalogoID = $catalogo->id;
+        // $data=Catalogo::where('id',$catalogoID)->with('categorias')->get();
+        return response()->json($catalogo);
     }
 }

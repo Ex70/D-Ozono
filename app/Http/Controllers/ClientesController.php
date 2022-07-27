@@ -103,15 +103,25 @@ class ClientesController extends Controller
             'success'=> $success,
             'message'=> $message,
         ]);
-
-   
-      
-         
-
-
     }
 
-    
+    public function dataAjax(Request $request)
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data =Cliente::select("id","nombre")
+                ->where('nombre','LIKE',"%$search%")
+                ->get();
+        }
+        return response()->json($data);
+    }
 
-    
+    public function datosCliente($id){
+        //
+        // $datos['productos'] = Producto::where('id_cotizacion',1)->with('catalogos')->get();
+        $datos['cliente']=Cliente::where('id',$id)->with('direcciones')->get();
+        // dd($datos);
+        return response()->json($datos);
+    }
 }

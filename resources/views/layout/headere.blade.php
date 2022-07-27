@@ -252,7 +252,7 @@
             <span class="menu-title">Inicio</span>
           </a>
         </li>
-        <li class="nav-item {{ active_class(['email/*', 'apps/*']) }}">
+        {{-- <li class="nav-item {{ active_class(['email/*', 'apps/*']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="mail"></i>
             <span class="menu-title">Apps</span>
@@ -402,48 +402,48 @@
               <li class="nav-item"><a href="{{ url('/icons/mdi-icons') }}" class="nav-link {{ active_class(['icons/mdi-icons']) }}">Mdi Icons</a></li>
             </ul>
           </div>
-        </li>
+        </li> --}}
         <li class="nav-item mega-menu {{ active_class(['general/*', 'error/*', 'auth/*']) }}">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="book"></i>
-            <span class="menu-title">Sample Pages</span>
+            <span class="menu-title">Cotizaciones</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
             <div class="col-group-wrapper row">
               <div class="col-group col-md-6">
-                <p class="category-heading">Special Pages</p>
+                <p class="category-heading">Nueva Cotización</p>
                 <div class="submenu-item">
                   <div class="row">
                     <div class="col-md-6">
                       <ul>
-                        <li class="nav-item"><a href="{{ url('/general/blank-page') }}" class="nav-link {{ active_class(['general/blank-page']) }}">Blank page</a></li>
-                        <li class="nav-item"><a href="{{ url('/general/faq') }}" class="nav-link {{ active_class(['general/faq']) }}">Faq</a></li>
-                        <li class="nav-item"><a href="{{ url('/general/invoice') }}" class="nav-link {{ active_class(['general/invoice']) }}">Invoice</a></li>
+                        <li class="nav-item"><a href="{{ url('/general/blank-page') }}" class="nav-link {{ active_class(['general/blank-page']) }}">De Venta</a></li>
+                        <li class="nav-item"><a href="{{ url('/general/faq') }}" class="nav-link {{ active_class(['general/faq']) }}">De Mantenimiento</a></li>
+                        {{-- <li class="nav-item"><a href="{{ url('/general/invoice') }}" class="nav-link {{ active_class(['general/invoice']) }}">Invoice</a></li> --}}
                       </ul>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                       <ul>
                         <li class="nav-item"><a href="{{ url('/general/profile') }}" class="nav-link {{ active_class(['general/profile']) }}">Profile</a></li>
                         <li class="nav-item"><a href="{{ url('/general/pricing') }}" class="nav-link {{ active_class(['general/pricing']) }}">Pricing</a></li>
                         <li class="nav-item"><a href="{{ url('/general/timeline') }}" class="nav-link {{ active_class(['general/timeline']) }}">Timeline</a></li>
                       </ul>
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
               </div>
               <div class="col-group col-md-3">
-                <p class="category-heading">Auth Pages</p>
+                <p class="category-heading">Consultar cotizaciones</p>
                 <ul class="submenu-item">
-                  <li class="nav-item"><a href="{{ url('/auth/login') }}" class="nav-link {{ active_class(['auth/login']) }}">Login</a></li>
-                  <li class="nav-item"><a href="{{ url('/auth/register') }}" class="nav-link {{ active_class(['auth/register']) }}">Register</a></li>
+                  <li class="nav-item"><a href="{{ url('/auth/login') }}" class="nav-link {{ active_class(['auth/login']) }}">Por Cliente</a></li>
+                  <li class="nav-item"><a href="{{ url('/auth/register') }}" class="nav-link {{ active_class(['auth/register']) }}">Por Tipo</a></li>
                 </ul>
               </div>
               <div class="col-group col-md-3">
-                <p class="category-heading">Error Pages</p>
+                <p class="category-heading">Cotizaciones eliminadas</p>
                 <ul class="submenu-item">
-                  <li class="nav-item"><a href="{{ url('/error/404') }}" class="nav-link {{ active_class(['error/404']) }}">404</a></li>
-                  <li class="nav-item"><a href="{{ url('/error/500') }}" class="nav-link {{ active_class(['error/500']) }}">500</a></li>
+                  <li class="nav-item"><a href="{{ url('/error/404') }}" class="nav-link {{ active_class(['error/404']) }}">Por cliente</a></li>
+                  <li class="nav-item"><a href="{{ url('/error/500') }}" class="nav-link {{ active_class(['error/500']) }}">Por tipo</a></li>
                 </ul>
               </div>
             </div>
@@ -452,7 +452,7 @@
         <li class="nav-item">
           <a href="https://www.nobleui.com/laravel/documentation/docs.html" target="_blank" class="nav-link">
             <i class="link-icon" data-feather="hash"></i>
-            <span class="menu-title">Documentation</span></a>
+            <span class="menu-title">Documentación</span></a>
         </li>
         <li class="nav-item {{ active_class(['icons/*']) }}">
           <a href="#" class="nav-link">
@@ -462,8 +462,8 @@
           </a>
           <div class="submenu">
             <ul class="submenu-item">
-              <li class="nav-item"><a href="{{ url('/catalogos') }}" class="nav-link {{ active_class(['icons/feather-icons']) }}">Catálogo de Productos</a></li>
-              <li class="nav-item"><a href="{{ url('/categoriaproductos') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Categorías de Productos</a></li>
+              <li class="nav-item"><a href="{{ url('/catalogos') }}" class="nav-link {{ active_class(['icons/feather-icons']) }}">Catálogos</a></li>
+              <li class="nav-item"><a href="{{ url('/categoriaproductos') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Categorías</a></li>
               <li class="nav-item"><a href="{{ url('/clientes') }}" class="nav-link {{ active_class(['icons/mdi-icons']) }}">Clientes</a></li>
               <li class="nav-item"><a href="{{ url('/cotizaciones') }}" class="nav-link {{ active_class(['icons/feather-icons']) }}">Cotizaciones</a></li>
               <li class="nav-item"><a href="{{ url('/direcciones') }}" class="nav-link {{ active_class(['icons/flag-icons']) }}">Direcciones</a></li>
