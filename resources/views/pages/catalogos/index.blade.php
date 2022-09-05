@@ -142,15 +142,8 @@
               required: true,
               maxlength: 255
             },
-            clave: {
-              required: true,
-              maxlength: 255
-            },
             precio_unitario: {
               required: true
-            },
-            garantia: {
-              required: true,
             }
           },
           messages: {
@@ -161,14 +154,10 @@
               required: "Por favor, introduzca una descripcion",
               maxlength: "la descripcion no debe exceder los 255 caracteres"
             },
-            clave: {
-              required: "Por favor, introduzca una clave",
-              maxlength: "la Clave no debe exceder los 255 caracteres"
-            },
             precio_unitario: {
               required: "Por favor, introduzca precio unitario",
             },
-            garantia: "Por favor, introduzca la garantia del producto",
+            // garantia: "Por favor, introduzca la garantia del producto",
           },
           errorPlacement: function(label, element) {
             label.addClass('mt-1 tx-13 text-danger');

@@ -2,9 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class Clientes extends Migration
+class CreateProspectosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +14,7 @@ class Clientes extends Migration
      */
     public function up()
     {
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('prospectos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->string('telefono',10);
@@ -21,10 +22,12 @@ class Clientes extends Migration
             $table->string('correo')->unique();
             $table->string('tipo');
             $table->string('ubicacion');
-            $table->string('medio_captacion');
+            $table->string('medio_captacion')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });
+        DB::update("ALTER TABLE prospectos AUTO_INCREMENT = 10001;");
+
     }
 
     /**
@@ -34,6 +37,6 @@ class Clientes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('prospectos');
     }
 }

@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master2')
 
 @section('content')
 <nav class="page-breadcrumb">
@@ -87,10 +87,24 @@
             </div>
           </div>
         </div>
-        <div class="container-fluid w-100">
-          <a href="javascript:;" class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send" class="me-3 icon-md"></i>Send Invoice</a>
-          <a href="javascript:;" onclick="imprimir()" class="btn btn-outline-primary float-end mt-4"><i data-feather="printer" class="me-2 icon-md"></i>Print</a>
+        <div class="container-fluid row mt-5 mb-4 w-100">
+          <div class="col-lg-2">
+            <label for="defaultconfig-4" class="col-form-label">Otras Condiciones: </label>
+          </div>
+          <div class="col-lg-10">
+            <label for="defaultconfig-4" class="col-form-label">{{$datos['cotizacion'][0]['condiciones']}}</label>
+          </div>
         </div>
+        <div class="container-fluid row mt-5 mb-4 w-100">
+          <img src="{{url('assets/images/datos-contacto.png')}}" alt="logo-d.ozono" class="img-fluid">
+        </div>
+        @unless($datos['inBackground'])
+        <div class="container-fluid w-100">
+          <a href="javascript:;" class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send" class="me-3 icon-md"></i>Aprobar cotización</a>
+          <a href="javascript:;" onclick="imprimir()" class="btn btn-outline-primary float-end mt-4"><i data-feather="printer" class="me-2 icon-md"></i>Imprimir</a>
+          <a class="button" href="{{ route('invoice.download') }}">Descargar PDF</a>
+        </div>
+        @endunless
       </div>
     </div>
   </div>
@@ -99,12 +113,29 @@
 
 <script>
   function imprimir(){
-    var print_div = document.getElementById("hello");
-    var print_area = window.open();
-    print_area.document.write(print_div.innerHTML);
-    print_area.document.close();
-    print_area.focus();
-    print_area.print();
-    print_area.close();
+    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head>');
+    mywindow.document.write("<link href=\"../css/app.css\" rel=\"stylesheet\">")
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementById('hello').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+
+    setTimeout(function () {
+    mywindow.print();
+    mywindow.close();
+    }, 1000)
+    return true;
+    // var print_div = document.getElementById("hello");
+    // var print_area = window.open();
+    // print_area.document.write(print_div.innerHTML);
+    // print_area.document.close();
+    // print_area.focus();
+    // print_area.print();
+    // print_area.close();
   }
 </script>

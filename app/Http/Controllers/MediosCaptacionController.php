@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Medio;
 use Illuminate\Http\Request;
-use App\Models\Categorias;
 
-class CategoriasProductosController extends Controller
+class MediosCaptacionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-         $datos['categorias']=Categorias::where('status',1)->get(); 
-         return view('pages.categorias.index',compact('datos'));
-      
+    public function index(){
+        $datos['medios']=Medio::where('status',1)->get();
+        return view('pages.medioscaptacion.index',compact('datos'));
     }
 
     /**
@@ -37,12 +34,12 @@ class CategoriasProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $CategoriaID = $request->id;
-        $categoria = Categorias::updateOrCreate(
-            ['id' => $CategoriaID],
+        $medioID = $request->id;
+        $medio = Medio::updateOrCreate(
+            ['id' => $medioID],
             ['descripcion' => $request->descripcion]);
-        $CategoriaID = $categoria->id;
-        $data=Categorias::where('id',$CategoriaID)->get();
+        $medioID = $medio->id;
+        $data=Medio::where('id',$medioID)->get();
         return response()->json($data);
     }
 
@@ -64,7 +61,7 @@ class CategoriasProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        $datos['categoria']=Categorias::findOrFail($id);
+        $datos['medio']=Medio::findOrFail($id);
         return response()->json($datos);
     }
 
@@ -91,11 +88,10 @@ class CategoriasProductosController extends Controller
         //
     }
 
-    public function status($id)
-    {
-        Categorias::where('id',$id)->update(['status'=>0]);
-        $Categorias=Categorias::where('id',$id)->get();
-        if (!empty($Categorias)){
+    public function status($id){
+        Medio::where('id',$id)->update(['status'=>0]);
+        $medios=Medio::where('id',$id)->get();
+        if (!empty($medios)){
             $success = true;
             $message = "Registo eliminado exitosamente";
         }else{

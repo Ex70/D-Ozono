@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Vendedor;
 use Illuminate\Http\Request;
-use App\Models\Categorias;
 
-class CategoriasProductosController extends Controller
+class VendedorController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-         $datos['categorias']=Categorias::where('status',1)->get(); 
-         return view('pages.categorias.index',compact('datos'));
-      
+    public function index(){
+        $vendedores = Vendedor::where('status',1)->get();
+        return view('pages.vendedores.index',compact('vendedores'));
     }
 
     /**
@@ -36,14 +33,9 @@ class CategoriasProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        $CategoriaID = $request->id;
-        $categoria = Categorias::updateOrCreate(
-            ['id' => $CategoriaID],
-            ['descripcion' => $request->descripcion]);
-        $CategoriaID = $categoria->id;
-        $data=Categorias::where('id',$CategoriaID)->get();
-        return response()->json($data);
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
@@ -63,9 +55,9 @@ class CategoriasProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
-        $datos['categoria']=Categorias::findOrFail($id);
-        return response()->json($datos);
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -89,22 +81,5 @@ class CategoriasProductosController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function status($id)
-    {
-        Categorias::where('id',$id)->update(['status'=>0]);
-        $Categorias=Categorias::where('id',$id)->get();
-        if (!empty($Categorias)){
-            $success = true;
-            $message = "Registo eliminado exitosamente";
-        }else{
-            $success = true;
-            $message = "Rgistro no eliminado";
-        }
-        return response () -> json([
-            'success'=> $success,
-            'message'=> $message,
-        ]);
     }
 }

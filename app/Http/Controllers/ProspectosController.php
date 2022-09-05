@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Prospecto;
 use Illuminate\Http\Request;
-use App\Models\Categorias;
 
-class CategoriasProductosController extends Controller
+class ProspectosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,9 @@ class CategoriasProductosController extends Controller
      */
     public function index()
     {
-         $datos['categorias']=Categorias::where('status',1)->get(); 
-         return view('pages.categorias.index',compact('datos'));
-      
+        //
+        $prospectos = Prospecto::where('status',1)->get();
+        return view('pages.prospectos.index',compact('prospectos'));
     }
 
     /**
@@ -37,18 +36,18 @@ class CategoriasProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $CategoriaID = $request->id;
-        $categoria = Categorias::updateOrCreate(
-            ['id' => $CategoriaID],
-            ['descripcion' => $request->descripcion]);
-        $CategoriaID = $categoria->id;
-        $data=Categorias::where('id',$CategoriaID)->get();
+        $prospectoID = $request->id;
+        $prospecto =Prospecto::updateOrCreate(
+            ['id'=> $prospectoID],
+            ['nombre'=> $request->nombre, 'telefono'=>$request->telefono,'celular'=>$request->celular,'correo'=>$request->correo,'tipo'=>$request->tipo,'ubicacion'=>$request->ubicacion,'medio_captacion'=>$request->medio_captacion]);
+        $prospectoID = $prospecto->id;
+        $data=Prospecto::where('id',$prospectoID)->get();
         return response()->json($data);
     }
 
     /**
      * Display the specified resource.
-     *
+     *  
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -63,8 +62,10 @@ class CategoriasProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
-        $datos['categoria']=Categorias::findOrFail($id);
+    public function edit($id)
+    {
+        //
+        $datos['prospecto']=Prospecto::findOrFail($id);
         return response()->json($datos);
     }
 
@@ -86,25 +87,40 @@ class CategoriasProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function status($id)
     {
-        Categorias::where('id',$id)->update(['status'=>0]);
-        $Categorias=Categorias::where('id',$id)->get();
-        if (!empty($Categorias)){
+        Prospecto::where('id',$id)->update(['status'=>0]);
+        $prospectos=Prospecto::where('id',$id)->get();
+        if (!empty($prospectos)){
             $success = true;
             $message = "Registo eliminado exitosamente";
         }else{
             $success = true;
             $message = "Rgistro no eliminado";
         }
+
         return response () -> json([
             'success'=> $success,
             'message'=> $message,
         ]);
+    }
+
+    public function dataAjax(Request $request){
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data =Prospecto::select("id","nombre")
+                ->where('nombre','LIKE',"%$search%")
+                ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function datosCliente($id){
+        //
+        // $datos['productos'] = Producto::where('id_cotizacion',1)->with('catalogos')->get();
+        $datos['prospecto']=Prospecto::where('id',$id)->with('direcciones')->get();
+        // dd($datos);
+        return response()->json($datos);
     }
 }

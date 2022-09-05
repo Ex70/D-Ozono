@@ -39,7 +39,9 @@ License: For each use you must have a valid license purchased only from above li
   @stack('plugin-styles')
 
   <!-- common css -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+  {{-- <link href="{{ public_path('css/app.css') }}" rel="stylesheet" type="text/css" /> --}}
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+  {{-- <link href="http://127.0.0.1:8000/css/app.css" rel="stylesheet"> --}}
   <!-- end common css -->
 
   @stack('style')
@@ -49,7 +51,7 @@ License: For each use you must have a valid license purchased only from above li
   <script src="{{ asset('assets/js/spinner.js') }}"></script>
 
   <div class="main-wrapper" id="app">
-  @include('layout.header')
+  @include('layout.headere')
     <div class="page-wrapper">
       <div class="page-content">
         @yield('content')

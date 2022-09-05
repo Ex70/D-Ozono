@@ -9,7 +9,7 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Cotización</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Mantenimiento</li>
+    <li class="breadcrumb-item active" aria-current="page">Renta</li>
   </ol>
 </nav>
 
@@ -23,7 +23,7 @@
               <img src="{{url('assets/images/logo.png')}}" class="img-fluid" alt="logo-d.ozono">
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label text-muted">Prospecto:</label>
+                <label class="col-sm-3 col-form-label text-muted">Cliente:</label>
                 <div class="col-sm-9">
                   <select class="itemName form-control" name="itemName"></select>
                 </div>
@@ -46,7 +46,7 @@
                   </div>
                 </div>
               </div>
-              <input type="hidden" id="tipo" value="Mantenimiento">
+              <input type="hidden" id="tipo" value="Renta">
             {{-- <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Fecha :</span><div class="input-group date datepicker" id="datePickerExample">
               <input type="text" class="form-control">
               <span class="input-group-text input-group-addon"><i data-feather="calendar"></i></span>
@@ -263,7 +263,7 @@
     $('.itemName').change(function(){
       var value = $(this).val();
       // alert(value);
-        $.get('../prospectos/'+value+'/datos', function (data) {
+        $.get('../clientes/'+value+'/datos', function (data) {
           var post = '<input type="hidden" name="id_cliente" id="id_cliente" value="'+value+'"><p id="nombreCliente">'+data['cliente'][0].nombre+'<br>'+data['cliente'][0]['direcciones'][0].calle+', '+data['cliente'][0]['direcciones'][0].colonia+'<br>'+data['cliente'][0]['direcciones'][0].municipio+' , '+data['cliente'][0]['direcciones'][0].estado+'.</p>';
           $('#nombreCliente').replaceWith(post);
         });

@@ -24,9 +24,13 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\CotizacionesController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\ShowInvoiceController;
+use App\Http\Controllers\DownloadInvoiceController;
+use App\Http\Controllers\MediosCaptacionController;
+use App\Http\Controllers\ProspectosController;
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('pages.cotizaciones.seleccion');
 });
 
 // Auth::routes();
@@ -50,16 +54,28 @@ Route::get('/getPrice/{id}',[ReceiptController::class,'getPrice']);
 Route::get('admin/', [AdminAuthController::class, 'index'])
     ->name('admin.home')
     ->middleware('auth:webadmin');
-Route::get('admin/login', [AdminAuthController::class, 'login'])
+    Route::get('admin/login', [AdminAuthController::class, 'login'])
     ->name('admin.login');
-Route::post('admin/login', [AdminAuthController::class, 'handleLogin'])
+    Route::post('admin/login', [AdminAuthController::class, 'handleLogin'])
     ->name('admin.handleLogin');
-Route::get('admin/logout', [AdminAuthController::class, 'index'])
+    Route::get('admin/logout', [AdminAuthController::class, 'index'])
     ->name('admin.logout');
 
 Route::get('/permisos',[PermisoController::class, 'index']);
 Route::get('/usuarios1',[UsuariosController::class, 'index']);
+
+// CATEGORÍAS DE PRODUCTO
 Route::get('/categoriaproductos',[CategoriasProductosController::class, 'index']);
+Route::post('categoriaproductos/{id}',[CategoriasProductosController::class, 'status']);
+Route::get('categoriaproductos/{id}/edit',[CategoriasProductosController::class, 'edit']);
+Route::post('/categoriaproductos',[CategoriasProductosController::class, 'store']);
+
+// MEDIOS DE CAPTACIÓN
+Route::get('/medioscaptacion',[MediosCaptacionController::class, 'index']);
+Route::post('medioscaptacion/{id}',[MediosCaptacionController::class, 'status']);
+Route::get('medioscaptacion/{id}/edit',[MediosCaptacionController::class, 'edit']);
+Route::post('/medioscaptacion',[MediosCaptacionController::class, 'store']);
+
 Route::get('/catalogos',[CatalogosProductosController::class, 'index']);
 Route::get('/facturas',[FacturasController::class, 'index']);
 Route::get('/direcciones',[DireccionesController::class, 'index']);
@@ -67,6 +83,9 @@ Route::get('/clientes',[ClientesController::class, 'index']);
 // ->middleware('auth:web');
 Route::get('/clientesajax',[ClientesController::class, 'dataAjax']);
 Route::post('clientes/{id}',[ClientesController::class, 'status']);
+Route::get('/prospectos',[ProspectosController::class, 'index']);
+Route::get('/prospectosajax',[ProspectosController::class, 'dataAjax']);
+Route::post('prospectos/{id}',[ProspectosController::class, 'status']);
 Route::post('cotizaciones/{id}',[CotizacionesController::class, 'status']);
 Route::post('facturas/{id}',[FacturasController::class, 'status']);
 Route::post('permisos/{id}',[PermisoController::class, 'status']);
@@ -74,29 +93,38 @@ Route::post('productos/{id}',[ProductosController::class, 'status']);
 Route::post('catalogos/{id}',[CatalogosProductosController::class, 'status']);
 Route::post('direcciones/{id}',[DireccionesController::class, 'status']);
 Route::post('usuarios1/{id}',[UsuariosController::class, 'status']);
-Route::post('categoriaproductos/{id}',[CategoriasProductosController::class, 'status']);
 Route::get('/cotizaciones',[CotizacionesController::class, 'index']); //error
+// Route::get('/cotizaciones/crear',[CotizacionesController::class, 'index']); //error
+Route::get('/cotizaciones/crear', function () {
+    return view('pages.cotizaciones.seleccion');
+});
 Route::get('/productos',[ProductosController::class, 'index']);
 
 Route::get('/usuario/{id}/edit',[UsuariosController::class, 'edit']);
-Route::get('categoriaproductos/{id}/edit',[CategoriasProductosController::class, 'edit']);
 Route::get('facturas/{id}/edit',[FacturasController::class, 'edit']);
 Route::get('catalogos/{id}/edit',[CatalogosProductosController::class, 'edit']);
 Route::get('permisos/{id}/edit',[PermisoController::class, 'edit']);
 Route::get('clientes/{id}/edit',[ClientesController::class, 'edit']);
 Route::get('clientes/{id}/datos',[ClientesController::class, 'datosCliente']);
+Route::get('prospectos/{id}/edit',[ProspectosController::class, 'edit']);
+Route::get('prospectos/{id}/datos',[ProspectosController::class, 'datosCliente']);
 Route::get('direcciones/{id}/edit',[DireccionesController::class, 'edit']);
 Route::get('cotizaciones/{id}/edit',[CotizacionesController::class, 'edit']);
 Route::get('productos/{id}/edit',[ProductosController::class, 'edit']);
-Route::get('general/mantenimiento/{id}',[CotizacionesController::class, 'mantenimiento']);
-Route::get('general/crear-mantenimiento',[CotizacionesController::class, 'mantenimientonuevo']);
+// Route::get('cotizacion/{id}',[CotizacionesController::class, 'mantenimiento']);
+Route::get('cotizaciones/crear-mantenimiento',[CotizacionesController::class, 'mantenimientonuevo']);
+Route::get('cotizaciones/crear-venta',[CotizacionesController::class, 'ventanueva']);
+Route::get('cotizaciones/crear-renta',[CotizacionesController::class, 'rentanueva']);
+Route::get('cotizaciones/generarPDF',[CotizacionesController::class, 'generarPDF']);
+Route::get('cotizacion/{id}',[ShowInvoiceController::class, 'attributes']);
+Route::get('invoice/download', [DownloadInvoiceController::class,'index'])->name('invoice.download');
 
 Route::post('/usuarios1',[UsuariosController::class, 'store']);
-Route::post('/categoriaproductos',[CategoriasProductosController::class, 'store']);
 Route::post('/facturas',[FacturasController::class, 'store']);
 Route::post('/catalogos',[CatalogosProductosController::class, 'store']);
 Route::post('/permisos',[PermisoController::class, 'store']);
 Route::post('/clientes',[ClientesController::class, 'store']);
+Route::post('/prospectos',[ProspectosController::class, 'store']);
 Route::post('/direcciones',[DireccionesController::class, 'store']);
 Route::post('/productos',[ProductosController::class, 'store']);
 Route::post('/cotizaciones',[CotizacionesController::class, 'store']);

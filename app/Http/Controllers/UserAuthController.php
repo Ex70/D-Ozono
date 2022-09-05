@@ -9,7 +9,7 @@ class UserAuthController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        return view('pages.cotizaciones.seleccion');
     }
 
     public function login()

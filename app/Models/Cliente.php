@@ -22,22 +22,20 @@ class Cliente extends Model
       'medio_captacion',
       'status'
    ];
+
    protected $hidden = [
       'remember_token',
    ];
 
-   public function facturas()
-   {
+   public function facturas(){
       return $this->hasMany(Factura::class,'id');
    }
 
-    public function direcciones()
-   {
+   public function direcciones(){
       return $this->hasMany(Direccion::class,'id');
    }
 
-     public function cotizaciones()
-   {
+   public function cotizaciones(){
       return $this->hasMany(Cotizacion::class,'id');
    }
 }
