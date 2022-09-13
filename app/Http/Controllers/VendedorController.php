@@ -33,9 +33,16 @@ class VendedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $vendedorID = $request->id;
+        $vendedor = Vendedor::updateOrCreate(
+            ['id' => $vendedorID],
+            ['nombre' => $request->nombre,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo]);
+        $vendedorID = $vendedor->id;
+        $data=Vendedor::where('id',$vendedorID)->get();
+        return response()->json($data);
     }
 
     /**
@@ -55,9 +62,9 @@ class VendedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        $datos['vendedor']=Vendedor::findOrFail($id);
+        return response()->json($datos);
     }
 
     /**
@@ -81,5 +88,21 @@ class VendedorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function status($id){
+        Vendedor::where('id',$id)->update(['status'=>0]);
+        $vendedor=Vendedor::where('id',$id)->get();
+        if (!empty($vendedor)){
+            $success = true;
+            $message = "Vendedor eliminado exitosamente";
+        }else{
+            $success = true;
+            $message = "Vendedor no eliminado";
+        }
+        return response () -> json([
+            'success'=> $success,
+            'message'=> $message,
+        ]);
     }
 }

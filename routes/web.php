@@ -28,6 +28,7 @@ use App\Http\Controllers\ShowInvoiceController;
 use App\Http\Controllers\DownloadInvoiceController;
 use App\Http\Controllers\MediosCaptacionController;
 use App\Http\Controllers\ProspectosController;
+use App\Http\Controllers\VendedorController;
 
 Route::get('/', function () {
     return view('pages.cotizaciones.seleccion');
@@ -75,6 +76,12 @@ Route::get('/medioscaptacion',[MediosCaptacionController::class, 'index']);
 Route::post('medioscaptacion/{id}',[MediosCaptacionController::class, 'status']);
 Route::get('medioscaptacion/{id}/edit',[MediosCaptacionController::class, 'edit']);
 Route::post('/medioscaptacion',[MediosCaptacionController::class, 'store']);
+
+// VENDEDORES
+Route::get('/vendedores',[VendedorController::class, 'index']);
+Route::post('vendedores/{id}',[VendedorController::class, 'status']);
+Route::get('vendedores/{id}/edit',[VendedorController::class, 'edit']);
+Route::post('/vendedores',[VendedorController::class, 'store']);
 
 Route::get('/catalogos',[CatalogosProductosController::class, 'index']);
 Route::get('/facturas',[FacturasController::class, 'index']);
